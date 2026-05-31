@@ -47,3 +47,32 @@
     -webkit-box-orient: vertical;
   }
 }
+
+// Shared Input styles
+@mixin input-base {
+  width: 100%;
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-base;
+  color: $color-text-dark;
+  background-color: $color-bg;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-sm;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: inherit;
+
+  &::placeholder {
+    color: $color-text;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: $color-bg-surface;
+  }
+}
