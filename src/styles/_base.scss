@@ -1,0 +1,26 @@
+@use "variables" as *;
+
+:root {
+  font-family: $font-sans;
+  font-size: $font-size-base;
+  color: $color-text;
+  background: $color-bg-surface;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $color-text-dark;
+  font-weight: $font-weight-medium;
+}
+
+a {
+  color: $color-accent;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: $color-accent-hover;
+  }
+}
