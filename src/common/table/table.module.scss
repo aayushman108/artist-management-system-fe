@@ -1,0 +1,128 @@
+@use "../../styles/variables" as *;
+
+.tableContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  background: $color-bg;
+  border-radius: $border-radius-md;
+  border: 1px solid $color-border;
+  box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  // Custom horizontal scrollbar
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-border;
+    border-radius: 10px;
+
+    &:hover {
+      background: $color-text;
+    }
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+  font-size: 13px; // slightly smaller for data table
+
+  thead {
+    background: $color-bg-surface;
+    
+    th {
+      padding: $spacing-sm $spacing-md;
+      font-weight: $font-weight-medium;
+      color: $color-text;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 12px;
+      border-bottom: 1px solid $color-border;
+      white-space: nowrap;
+
+      &:first-child {
+        border-top-left-radius: $border-radius-md;
+      }
+      &:last-child {
+        border-top-right-radius: $border-radius-md;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      transition: all 0.15s ease;
+
+      &:hover {
+        background-color: $color-hover;
+      }
+
+      &.clickableRow {
+        cursor: pointer;
+      }
+
+      td {
+        padding: $spacing-sm $spacing-md;
+        color: $color-text-dark;
+        vertical-align: middle;
+        border-bottom: 1px solid $color-border;
+      }
+
+      &:last-child {
+        td {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}
+
+.actionsCol {
+  width: 120px;
+  text-align: right;
+  padding-right: $spacing-md !important;
+}
+
+.actionCell {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.emptyCell {
+  padding: $spacing-xl $spacing-md !important;
+  text-align: center;
+  color: $color-text;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-base;
+}
+
+.skeletonTable {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  padding: $spacing-sm;
+  background: $color-bg;
+  border-radius: $border-radius-md;
+  border: 1px solid $color-border;
+}
+
+.skeletonRow {
+  opacity: 0.5;
+  background: $color-hover;
+}

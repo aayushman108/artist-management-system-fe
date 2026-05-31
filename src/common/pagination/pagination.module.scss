@@ -1,0 +1,112 @@
+@use "../../styles/variables" as *;
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-sm $spacing-md;
+  background: $color-bg;
+  border-top: 1px solid $color-border;
+  border-bottom-left-radius: $border-radius-md;
+  border-bottom-right-radius: $border-radius-md;
+  width: 100%;
+  margin-top: -1px;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    gap: $spacing-md;
+    text-align: center;
+  }
+}
+
+.info {
+  font-size: 12px;
+  color: $color-text;
+  font-weight: $font-weight-medium;
+
+  span {
+    color: $color-text-dark;
+    font-weight: $font-weight-bold;
+  }
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.pages {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.pageBtn {
+  min-width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: $font-weight-semibold;
+  color: $color-text;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover:not(.active):not(.ellipsis) {
+    background: $color-hover;
+    color: $color-text-dark;
+  }
+
+  &.active {
+    background: $color-active;
+    color: $color-accent;
+    border-color: $color-active;
+  }
+
+  &.ellipsis {
+    cursor: default;
+    color: $color-text;
+  }
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  height: 28px;
+  font-size: 12px;
+  font-weight: $font-weight-semibold;
+  color: $color-text;
+  background: $color-bg;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  svg {
+    font-size: 14px;
+  }
+
+  &:hover:not(:disabled) {
+    background: $color-hover;
+    color: $color-text-dark;
+    border-color: $color-border;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 480px) {
+    span {
+      display: none;
+    }
+  }
+}

@@ -3,14 +3,35 @@
 // Responsive breakpoints
 @mixin breakpoint($bp) {
   @if $bp == sm {
-    @media (max-width: $breakpoint-sm) { @content; }
+    @media (max-width: $breakpoint-sm) {
+      @content;
+    }
   } @else if $bp == md {
-    @media (max-width: $breakpoint-md) { @content; }
+    @media (max-width: $breakpoint-md) {
+      @content;
+    }
   } @else if $bp == lg {
-    @media (max-width: $breakpoint-lg) { @content; }
+    @media (max-width: $breakpoint-lg) {
+      @content;
+    }
   } @else if $bp == xl {
-    @media (max-width: $breakpoint-xl) { @content; }
+    @media (max-width: $breakpoint-xl) {
+      @content;
+    }
   }
+}
+
+// Skeleton styles
+@mixin skeleton {
+  background: linear-gradient(
+    90deg,
+    $color-hover 25%,
+    $color-border 50%,
+    $color-hover 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: $border-radius-sm;
 }
 
 // Truncate text

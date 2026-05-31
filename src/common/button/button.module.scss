@@ -1,0 +1,152 @@
+@use "../../styles/variables" as *;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  border: 1px solid transparent;
+  border-radius: $border-radius-sm;
+  font-family: inherit;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// Variants
+.primary {
+  background: $color-accent;
+  color: $color-bg;
+
+  &:hover:not(:disabled) {
+    background: $color-accent-hover;
+  }
+}
+
+.secondary {
+  background: $color-bg;
+  color: $color-text-dark;
+  border-color: $color-border;
+
+  &:hover:not(:disabled) {
+    background: $color-hover;
+  }
+}
+
+.outline {
+  background: transparent;
+  color: $color-accent;
+  border-color: $color-accent;
+
+  &:hover:not(:disabled) {
+    background: $color-active;
+  }
+}
+
+.ghost {
+  background: transparent;
+  color: $color-text;
+
+  &:hover:not(:disabled) {
+    background: $color-hover;
+    color: $color-text-dark;
+  }
+}
+
+.danger {
+  background: $color-danger;
+  color: $color-bg;
+
+  &:hover:not(:disabled) {
+    background: darken($color-danger, 10%);
+  }
+}
+
+.success {
+  background: $color-success;
+  color: $color-bg;
+
+  &:hover:not(:disabled) {
+    background: darken($color-success, 10%);
+  }
+}
+
+// Sizes
+.sm {
+  padding: $spacing-xs $spacing-sm;
+  font-size: 12px;
+  height: 28px;
+  border-radius: $border-radius-sm;
+}
+
+.md {
+  padding: $spacing-xs $spacing-md;
+  font-size: $font-size-base;
+  height: 36px;
+  border-radius: $border-radius-sm;
+}
+
+.lg {
+  padding: $spacing-sm $spacing-lg;
+  font-size: 16px;
+  height: 44px;
+  border-radius: $border-radius-md;
+}
+
+// Full width
+.fullWidth {
+  width: 100%;
+}
+
+// Loading
+.loading {
+  pointer-events: none;
+  position: relative;
+  color: transparent !important;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 2px solid $color-border;
+    border-top-color: $color-accent;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+
+  &.primary,
+  &.danger,
+  &.success {
+    &::before {
+      border-color: rgba(255, 255, 255, 0.3);
+      border-top-color: $color-bg;
+    }
+  }
+
+  &.outline {
+    &::before {
+      border-color: $color-active;
+      border-top-color: $color-accent;
+    }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Icon only
+.iconOnly {
+  padding: $spacing-sm;
+  border-radius: $border-radius-sm;
+}
