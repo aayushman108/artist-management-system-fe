@@ -1,4 +1,4 @@
-import { ConfirmationModal } from "./confirmationModal.component";
+import { ConfirmationModal } from "./confirmationModal.common";
 
 interface DeleteConfirmationModalProps {
   isOpen: boolean;

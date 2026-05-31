@@ -1,3 +1,3 @@
-export * from "./modal.component";
-export * from "./confirmationModal.component";
-export * from "./deleteConfirmationModal.component";
+export * from "./modal.common";
+export * from "./confirmationModal.common";
+export * from "./deleteConfirmationModal.common";

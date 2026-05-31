@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal } from "./modal.component";
+import { Modal } from "./modal.common";
 import { Button } from "../button";
 
 interface ConfirmationModalProps {
