@@ -1,7 +1,7 @@
-import { Navigate, type RouteObject } from "react-router-dom";
+import { type RouteObject, Navigate } from "react-router-dom";
+import { Login, Signup } from "../components";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { PublicRoute } from "./PublicRoute";
-import { Login, Signup } from "../components";
 
 export const Routes: RouteObject[] = [
   {
@@ -9,7 +9,7 @@ export const Routes: RouteObject[] = [
     element: <PublicRoute />,
     children: [
       {
-        index: true,
+        path: "login",
         element: <Login />,
       },
       {
@@ -19,8 +19,18 @@ export const Routes: RouteObject[] = [
     ],
   },
   {
+    path: "/",
     element: <ProtectedRoute />,
-    children: [],
+    children: [
+      {
+        path: "",
+        element: <div>Dashboard</div>,
+      },
+      {
+        path: "artist-manager",
+        element: <div>Artist Manager</div>,
+      },
+    ],
   },
   {
     path: "*",
