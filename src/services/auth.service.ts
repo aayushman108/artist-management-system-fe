@@ -8,6 +8,11 @@ interface ISignupPayload {
   role: UserRoleType;
 }
 
+export interface ILoginPayload {
+  email: string;
+  password: string;
+}
+
 // SIGNUP
 async function signup(
   payload: ISignupPayload,

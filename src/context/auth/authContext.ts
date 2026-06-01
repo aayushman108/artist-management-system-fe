@@ -1,10 +1,11 @@
 import { createContext } from "react";
+import type { ILoginPayload } from "../../services/auth.service";
 
 export interface AuthContextType {
   user: User.IUser | null;
   isAuthenticated: boolean;
   isAuthLoading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (payload: ILoginPayload) => Promise<void>;
   logout: () => Promise<void>;
 }
 

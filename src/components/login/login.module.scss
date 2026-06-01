@@ -1,0 +1,92 @@
+@use "../../styles/variables" as *;
+
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: $color-bg-surface;
+  padding: $spacing-md;
+  position: relative;
+  overflow: hidden;
+
+  .loginCard {
+    width: 100%;
+    max-width: 400px;
+    background: $color-bg;
+    padding: 2.5rem 2rem;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-card;
+    border: 1px solid $color-border;
+
+    .header {
+      text-align: center;
+      margin-bottom: $spacing-lg;
+
+      .logo {
+        display: block;
+        margin: 0 auto $spacing-lg auto;
+        height: 80px;
+        width: auto;
+        object-fit: contain;
+      }
+
+      h1 {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: $color-text-dark;
+        margin: 0 0 $spacing-sm 0;
+      }
+
+      p {
+        font-size: $font-size-base;
+        color: $color-text;
+        margin: 0;
+      }
+    }
+
+    .loginForm {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-md;
+
+      .forgotPassword {
+        text-align: right;
+        margin-top: $spacing-xs;
+
+        a {
+          font-size: $font-size-sm;
+          color: $color-text;
+          text-decoration: none;
+
+          &:hover {
+            color: $color-text-dark;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: $spacing-xl;
+
+      p {
+        font-size: $font-size-base;
+        color: $color-text;
+        margin: 0;
+      }
+
+      a {
+        color: $color-primary;
+        font-weight: $font-weight-semibold;
+        text-decoration: none;
+        margin-left: $spacing-xs;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
