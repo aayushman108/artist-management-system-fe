@@ -1,3 +1,4 @@
+@use "sass:color";
 @use "../../styles/variables" as *;
 @use "../../styles/mixins" as *;
 
@@ -141,7 +142,7 @@
     background-color: $color-border;
     border-radius: 10px;
     &:hover {
-      background-color: darken(#dadce0, 10%);
+      background-color: color.adjust(#dadce0, $lightness: -10%);
     }
   }
 
@@ -185,7 +186,7 @@
   }
 
   &.selected.highlighted {
-    background: darken(#e8f0fe, 5%);
+    background: color.adjust(#e8f0fe, $lightness: -5%);
   }
 
   &.optionDisabled {
