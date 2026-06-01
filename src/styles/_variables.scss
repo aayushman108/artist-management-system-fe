@@ -5,16 +5,32 @@ $color-bg: #ffffff;
 $color-bg-surface: #f8f9fa;
 $color-border: #dadce0;
 $color-hover: #f1f3f4;
-$color-active: #e8f0fe;
-$color-accent: #1a73e8;
-$color-accent-hover: #1765cc;
+$color-active: #f3e8ff;
+$color-primary: #7c3aed;
+$color-primary-hover: #6d28d9;
+$color-accent: #8b5cf6;
+$color-accent-hover: #7c3aed;
 $color-danger: #d93025;
 $color-success: #188038;
 $color-warning: #f9ab00;
 
+// Gradients
+$gradient-primary: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+$gradient-secondary: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+$gradient-accent: linear-gradient(135deg, #c084fc 0%, #a855f7 100%);
+$gradient-subtle: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+$gradient-dark: linear-gradient(135deg, #2e1065 0%, #1e1b4b 100%);
+
 // Typography
 $font-sans: "Google Sans", Roboto, system-ui, sans-serif;
-$font-size-base: 14px;
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem;
+$font-size-md: 1.125rem;
+$font-size-lg: 1.25rem;
+$font-size-xl: 1.5rem;
+$font-size-2xl: 1.875rem;
+$font-size-3xl: 2.25rem;
 
 // Font weights
 $font-weight-light: 300;
@@ -42,6 +58,9 @@ $border-radius-sm: 4px;
 $border-radius-md: 8px;
 $border-radius-lg: 16px;
 $border-radius-full: 9999px;
+
+// Shadows
+$shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
 
 // Breakpoints
 $breakpoint-sm: 576px;
