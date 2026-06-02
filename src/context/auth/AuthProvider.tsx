@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AuthContext } from "./authContext";
-import { authService } from "../../services/auth.service";
+import { authService, type ILoginPayload } from "../../services/auth.service";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User.IUser | null>(null);
@@ -24,9 +24,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     })();
   }, []);
 
-  const handleLogin = async (email: string, password: string) => {
+  const handleLogin = async (payload: ILoginPayload) => {
     try {
-      const res = await authService.login(email, password);
+      const res = await authService.login(payload);
       setIsAuthenticated(true);
       setUser(res.data.user);
       localStorage.setItem("accessToken", res.data.accessToken);

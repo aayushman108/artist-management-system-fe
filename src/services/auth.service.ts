@@ -32,10 +32,9 @@ async function verifyEmail(
 
 // LOGIN
 async function login(
-  email: string,
-  password: string,
+  payload: ILoginPayload,
 ): Promise<Api.BaseResponse<User.ILoginResponse>> {
-  const res = await api.post("/auth/login", { email, password });
+  const res = await api.post("/auth/login", payload);
   return res.data;
 }
 

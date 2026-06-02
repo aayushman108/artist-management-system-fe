@@ -26,7 +26,7 @@ export function LoginForm() {
     }
 
     setError({});
-    login(validatedData.data);
+    login(formData);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
