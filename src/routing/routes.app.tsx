@@ -5,7 +5,6 @@ import { PublicRoute } from "./PublicRoute";
 
 export const Routes: RouteObject[] = [
   {
-    path: "/",
     element: <PublicRoute />,
     children: [
       {
@@ -24,11 +23,23 @@ export const Routes: RouteObject[] = [
     children: [
       {
         path: "",
-        element: <div>Dashboard</div>,
+        element: <div>Home</div>,
       },
       {
-        path: "artist-manager",
+        path: "users",
+        element: <div>Users</div>,
+      },
+      {
+        path: "artist-managers",
         element: <div>Artist Manager</div>,
+      },
+      {
+        path: "artists",
+        element: <div>Artists</div>,
+      },
+      {
+        path: "musics",
+        element: <div>Musics</div>,
       },
     ],
   },
