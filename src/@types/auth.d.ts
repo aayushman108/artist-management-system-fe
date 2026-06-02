@@ -3,7 +3,7 @@ declare namespace User {
     id: string;
     company_name: string;
     email: string;
-    role: string;
+    role: UserRoleType;
     parent_user_id: string | null;
     super_admin_id: string | null;
     status: string;

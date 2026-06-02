@@ -1,0 +1,256 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+@use "sass:color";
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: $sidebar-width;
+  background:
+    linear-gradient(180deg, rgba($color-primary, 0.035), transparent 36%),
+    $color-bg;
+  border-right: 1px solid color.mix($color-primary, $color-border, 18%);
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+  transition: width 0.3s ease;
+
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-lg;
+    border-bottom: 1px solid color.mix(transparent, $color-border, 14%);
+    height: $header-height;
+    position: relative;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: $spacing-md;
+      text-decoration: none;
+      span {
+        color: $color-text-dark;
+        font-weight: 700;
+        font-size: $font-size-md;
+        white-space: nowrap;
+        transition:
+          opacity 0.2s ease,
+          width 0.2s ease;
+      }
+    }
+
+    .logoIcon {
+      width: 32px;
+      height: 32px;
+      border-radius: $border-radius-md;
+      flex-shrink: 0;
+      object-fit: contain;
+    }
+  }
+
+  .collapseBtn {
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    background: $color-bg;
+    border: 1px solid $color-border;
+    border-radius: 50%;
+    color: $color-text;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+
+    &:hover {
+      color: $color-primary;
+      border-color: $color-primary;
+      box-shadow: 0 2px 6px rgba(124, 58, 237, 0.15);
+    }
+  }
+
+  .nav {
+    flex: 1;
+    padding: $spacing-md;
+    overflow-y: auto;
+    overflow-x: hidden;
+    .navItem {
+      display: flex;
+      align-items: center;
+      padding: $spacing-sm $spacing-md;
+      border-radius: $border-radius-md;
+      font-size: 13px;
+      font-weight: 500;
+      color: color.mix($color-text-dark, $color-text, 12%);
+      transition: all 0.2s ease;
+      text-decoration: none;
+      margin-bottom: 4px;
+      position: relative;
+      white-space: nowrap;
+
+      svg {
+        font-size: 1.25rem;
+        flex-shrink: 0;
+        width: 24px;
+        display: flex;
+        justify-content: center;
+        margin-right: $spacing-md;
+        transition: margin 0.2s ease;
+      }
+
+      span {
+        transition:
+          opacity 0.2s ease,
+          width 0.2s ease;
+      }
+
+      &:hover {
+        color: $color-text-dark;
+        background: color.mix(rgba($color-primary, 0.1), $color-hover, 28%);
+      }
+
+      &.active {
+        background: linear-gradient(
+          135deg,
+          rgba($color-primary, 0.1),
+          color.mix(transparent, rgba($color-primary, 0.1), 40%)
+        );
+        color: $color-primary;
+        font-weight: 600;
+        box-shadow: inset 0 0 0 1px rgba($color-primary, 0.2);
+
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          height: 18px;
+          width: 4px;
+          background: $color-primary;
+          border-radius: 0 4px 4px 0;
+        }
+      }
+
+      &.logoutBtn {
+        margin-top: $spacing-2xl;
+        color: $color-danger;
+        font-weight: 600;
+        background: transparent;
+        border: none;
+        width: 100%;
+        cursor: pointer;
+        &:hover {
+          background: rgba($color-danger, 0.1);
+        }
+      }
+    }
+  }
+
+  .userSection {
+    padding: $spacing-md;
+    border-top: 1px solid color.mix(transparent, $color-border, 14%);
+    .userCard {
+      display: flex;
+      align-items: center;
+      background: $color-bg-surface;
+      padding: $spacing-sm;
+      border-radius: $border-radius-md;
+      border: 1px solid color.mix($color-primary, $color-border, 16%);
+      overflow: hidden;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      .avatar {
+        position: relative;
+        width: 36px;
+        height: 36px;
+        background: rgba($color-primary, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $color-primary;
+        font-weight: 700;
+        overflow: hidden;
+        flex-shrink: 0;
+        margin-right: $spacing-sm;
+        transition: margin 0.2s ease;
+      }
+      .userInfo {
+        flex: 1;
+        min-width: 0;
+        transition:
+          opacity 0.2s ease,
+          width 0.2s ease;
+
+        .userName {
+          color: $color-text-dark;
+          font-weight: 600;
+          font-size: 13px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .userEmail {
+          color: $color-text;
+          font-size: 11px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+
+  &.collapsed {
+    width: $sidebar-width-collapsed;
+
+    .logo {
+      padding: $spacing-lg 0;
+      justify-content: center;
+
+      a span {
+        opacity: 0;
+        width: 0;
+        visibility: hidden;
+      }
+    }
+    .navItem {
+      padding: $spacing-sm 0;
+      justify-content: center;
+
+      svg {
+        margin-right: 0;
+      }
+
+      span {
+        opacity: 0;
+        width: 0;
+        visibility: hidden;
+      }
+    }
+    .userCard {
+      background: transparent;
+      border-color: transparent;
+      padding: $spacing-sm 0;
+      justify-content: center;
+
+      .avatar {
+        margin-right: 0;
+      }
+      .userInfo {
+        flex: none;
+        opacity: 0;
+        width: 0;
+        visibility: hidden;
+      }
+    }
+  }
+}

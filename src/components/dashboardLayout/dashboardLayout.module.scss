@@ -1,0 +1,18 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.layoutContainer {
+  display: flex;
+  min-height: 100vh;
+  background-color: $color-bg-surface;
+  .mainContent {
+    flex: 1;
+    padding: $spacing-xl;
+    transition: margin-left 0.3s ease;
+    margin-left: $sidebar-width;
+
+    &.mainContentCollapsed {
+      margin-left: $sidebar-width-collapsed;
+    }
+  }
+}
