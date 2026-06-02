@@ -16,7 +16,7 @@ export interface ILoginPayload {
 // SIGNUP
 async function signup(
   payload: ISignupPayload,
-): Promise<Api.BaseResponse<User.IUser>> {
+): Promise<Api.BaseResponse<{ token: string }>> {
   const res = await api.post("/auth/signup", payload);
   return res.data;
 }

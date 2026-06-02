@@ -1,0 +1,111 @@
+@use "../../styles/variables" as *;
+
+.signupContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: $color-bg-surface;
+  padding: $spacing-md;
+  position: relative;
+  overflow: hidden;
+
+  .signupCard {
+    width: 100%;
+    max-width: 440px;
+    background: $color-bg;
+    padding: 2.5rem 2rem;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-card;
+    border: 1px solid $color-border;
+
+    .header {
+      text-align: center;
+      margin-bottom: $spacing-lg;
+
+      .logo {
+        display: block;
+        margin: 0 auto $spacing-lg auto;
+        height: 80px;
+        width: auto;
+        object-fit: contain;
+      }
+
+      h1 {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: $color-text-dark;
+        margin: 0 0 $spacing-sm 0;
+      }
+
+      p {
+        font-size: $font-size-base;
+        color: $color-text;
+        margin: 0;
+      }
+    }
+
+    .signupForm {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-md;
+    }
+
+    .successMessage {
+      text-align: center;
+      padding: $spacing-xl $spacing-md;
+
+      .successIcon {
+        width: 56px;
+        height: 56px;
+        border-radius: $border-radius-full;
+        background: $color-success;
+        color: $color-bg;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        margin-bottom: $spacing-md;
+      }
+
+      p {
+        font-size: $font-size-base;
+        color: $color-text;
+        margin: 0;
+        line-height: 1.6;
+      }
+    }
+
+    .globalError {
+      background: rgba($color-danger, 0.08);
+      color: $color-danger;
+      padding: $spacing-sm $spacing-md;
+      border-radius: $border-radius-sm;
+      font-size: $font-size-sm;
+      text-align: center;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: $spacing-xl;
+
+      p {
+        font-size: $font-size-base;
+        color: $color-text;
+        margin: 0;
+      }
+
+      a {
+        color: $color-primary;
+        font-weight: $font-weight-semibold;
+        text-decoration: none;
+        margin-left: $spacing-xs;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
