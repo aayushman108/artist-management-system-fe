@@ -1,0 +1,151 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+@use "sass:color";
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-sm $spacing-lg;
+  background: color.mix($color-bg, $color-bg-surface, 84%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid color.mix($color-border, $color-primary, 84%);
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: $sidebar-width;
+  z-index: 100;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+  transition: all 0.3s ease;
+  height: $header-height;
+
+  &.collapsed {
+    left: $sidebar-width-collapsed;
+  }
+
+  @media (max-width: $breakpoint-lg) {
+    padding: $spacing-sm;
+    left: 0;
+    right: 0;
+
+    &.collapsed {
+      left: 0;
+    }
+  }
+
+  .left {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    .sidebarToggle {
+      display: none !important;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      background: $color-bg-surface;
+      border-radius: 8px;
+      color: $color-text;
+      border: 1px solid color.mix($color-border, $color-primary, 84%);
+      cursor: pointer;
+      transition:
+        color 0.2s,
+        background 0.2s,
+        border-color 0.2s;
+
+      svg {
+        font-size: 1.15rem;
+      }
+
+      &:hover {
+        background: $color-hover;
+        color: $color-text-dark;
+        border-color: $color-primary;
+      }
+
+      @media (min-width: $breakpoint-md) {
+        display: flex !important;
+      }
+    }
+
+    .greeting {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: $color-text-dark;
+      letter-spacing: -0.01em;
+      margin: 0;
+
+      span {
+        font-weight: 400;
+        color: $color-text !important;
+      }
+    }
+  }
+
+  .right {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+
+    .notifBtn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      background: $color-bg-surface;
+      border: 1px solid color.mix($color-border, $color-primary, 84%);
+      border-radius: 10px;
+      color: $color-text;
+      font-size: 1.25rem;
+      transition: all 0.2s ease;
+      position: relative;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba($color-primary, 0.1);
+        color: $color-primary;
+        border-color: rgba($color-primary, 0.2);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+
+      .notifBadge {
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        min-width: 18px;
+        height: 18px;
+        padding: 0 4px;
+        background: $color-danger;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 700;
+        border-radius: 50%;
+        border: 2px solid $color-bg;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: pulse 2s infinite;
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(217, 48, 37, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(217, 48, 37, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 48, 37, 0);
+  }
+}

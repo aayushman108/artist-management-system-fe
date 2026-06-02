@@ -7,12 +7,20 @@
   background-color: $color-bg-surface;
   .mainContent {
     flex: 1;
-    padding: $spacing-xl;
+    display: flex;
+    flex-direction: column;
     transition: margin-left 0.3s ease;
     margin-left: $sidebar-width;
+    min-height: 100vh;
 
     &.mainContentCollapsed {
       margin-left: $sidebar-width-collapsed;
+    }
+
+    .pageContent {
+      flex: 1;
+      padding: $spacing-xl;
+      margin-top: $header-height;
     }
   }
 }
