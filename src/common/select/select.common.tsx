@@ -23,6 +23,7 @@ export interface SelectProps {
   className?: string;
   id?: string;
   listHeight?: string | number;
+  size?: "sm" | "md";
 }
 
 export function Select({
@@ -39,6 +40,7 @@ export function Select({
   onChange,
   disabled = false,
   listHeight,
+  size = "md",
 }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -171,7 +173,7 @@ export function Select({
   );
 
   return (
-    <div className={`${styles.selectGroup} ${className}`} ref={containerRef}>
+    <div className={`${styles.selectGroup} ${size === "sm" ? styles.sm : ""} ${className}`} ref={containerRef}>
       {label && (
         <label htmlFor={selectId} className={styles.label}>
           {label}
