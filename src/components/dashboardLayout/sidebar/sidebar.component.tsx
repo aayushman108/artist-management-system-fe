@@ -90,10 +90,10 @@ export function Sidebar({
         <div className={styles.userSection}>
           <div className={styles.userCard}>
             <div className={styles.avatar}>
-              {getInitials(user?.company_name)}
+              {getInitials([user?.first_name, user?.last_name].join(" "))}
             </div>
             <div className={styles.userInfo}>
-              <div className={styles.userName}>{user?.company_name}</div>
+              <div className={styles.userName}>{user?.first_name}</div>
               <div className={styles.userEmail}>{user?.email}</div>
             </div>
           </div>

@@ -2,12 +2,13 @@ import { useCallback } from "react";
 import styles from "./usersTable.module.scss";
 import { HiOutlineEye, HiOutlinePencil, HiOutlineTrash } from "react-icons/hi";
 import { Table, type Column } from "../../common";
+import type { UserRoleType } from "../../constants/general.constant";
 
 interface IUser {
   id: string;
   name: string;
   email: string;
-  role: string;
+  role: UserRoleType;
   status: string;
   created_by: string;
 }

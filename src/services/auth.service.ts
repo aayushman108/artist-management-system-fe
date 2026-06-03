@@ -1,3 +1,4 @@
+import type { User } from "../@types/user";
 import type { UserRoleType } from "../constants/general.constant";
 import api from "../lib/api";
 

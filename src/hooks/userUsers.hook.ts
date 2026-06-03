@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { User } from "../@types/user";
 import api from "../lib/api";
 import { useQuery } from "./useQuery.hook";
+import { AxiosError } from "axios";
 
 export const useUsers = () => {
   const query = useQuery();
@@ -28,7 +29,13 @@ export const useUsers = () => {
       const response = await api.get("/users", { params: filters });
       setUsers(response.data?.data);
     } catch (error) {
-      setError(error.message);
+      let errorMsg: string;
+      if (error instanceof AxiosError) {
+        errorMsg = error?.response?.data?.message;
+      } else {
+        errorMsg = "Something went wrong. Please try again.";
+      }
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }

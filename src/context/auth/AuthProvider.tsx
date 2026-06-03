@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AuthContext } from "./authContext";
 import { authService, type ILoginPayload } from "../../services/auth.service";
+import type { User } from "../../@types/user";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User.IUser | null>(null);

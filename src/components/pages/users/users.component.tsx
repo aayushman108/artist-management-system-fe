@@ -8,7 +8,7 @@ export function UsersPage() {
   const query = useQuery();
 
   const remappedUsers = useMemo(() => {
-    return users?.data?.length > 0
+    return Array.isArray(users?.data)
       ? users?.data?.map((user) => {
           return {
             id: user?.user?.id,

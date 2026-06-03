@@ -3,14 +3,14 @@ import styles from "./header.module.scss";
 
 export function Header({ sidebarOpen }: { sidebarOpen: boolean }) {
   const { user } = useAuth();
-  const companyName = user?.company_name?.split(" ")[0] || "User";
+  const userName = [user?.first_name, user?.last_name].join(" ");
 
   return (
     <header
       className={`${styles.header} ${!sidebarOpen ? styles.collapsed : ""}`}
     >
       <div className={styles.left}>
-        <h1 className={styles.greeting}>{companyName}</h1>
+        <h1 className={styles.greeting}>{userName}</h1>
       </div>
     </header>
   );
