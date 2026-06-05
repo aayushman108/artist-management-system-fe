@@ -1,5 +1,11 @@
 import { type RouteObject, Navigate } from "react-router-dom";
-import { DashboardLayout, Login, Signup, UsersPage } from "../components";
+import {
+  DashboardLayout,
+  InvitationsPage,
+  Login,
+  Signup,
+  UsersPage,
+} from "../components";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { PublicRoute } from "./PublicRoute";
 
@@ -55,6 +61,10 @@ export const Routes: RouteObject[] = [
           {
             path: "artists",
             element: <div>Artists</div>,
+          },
+          {
+            path: "invitations",
+            element: <InvitationsPage />,
           },
           {
             path: "artists/:artistId",

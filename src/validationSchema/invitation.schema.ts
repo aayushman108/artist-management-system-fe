@@ -1,5 +1,6 @@
 import z from "zod";
 import { UserRole } from "../constants/general.constant";
+import { InvitationRequestStatus } from "../constants";
 
 const invitationRequestSchema = z.object({
   firstName: z
@@ -22,6 +23,14 @@ const invitationRequestSchema = z.object({
   ),
 });
 
+const updateStatusSchema = z.object({
+  status: z.enum(
+    [InvitationRequestStatus.PENDING, InvitationRequestStatus.REJECTED],
+    { message: "Please select a status" },
+  ),
+});
+
 export const invitationSchema = {
   invitationRequestSchema,
+  updateStatusSchema,
 };

@@ -1,7 +1,13 @@
 import { UserRole, type UserRoleType } from "../constants/general.constant";
 
 export const ROLE_PERMISSIONS: Record<UserRoleType, string[]> = {
-  [UserRole.SUPER_ADMIN]: ["/", "/users", "/artist-managers", "/artists"],
+  [UserRole.SUPER_ADMIN]: [
+    "/",
+    "/users",
+    "/artist-managers",
+    "/artists",
+    "/invitations",
+  ],
 
   [UserRole.ARTIST_MANAGER]: ["/", "/artists"],
 

@@ -36,6 +36,26 @@
     }
   }
 
+  &.send {
+    background: $color-active;
+    color: $color-primary;
+
+    &:hover {
+      background: $color-primary;
+      color: $color-bg;
+    }
+  }
+
+  &.toggle {
+    background: $color-warning-bg;
+    color: $color-warning;
+
+    &:hover {
+      background: $color-warning;
+      color: $color-bg;
+    }
+  }
+
   &.danger {
     background: $color-danger-bg;
     color: $color-danger;

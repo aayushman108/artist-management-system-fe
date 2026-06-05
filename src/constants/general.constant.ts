@@ -1,4 +1,5 @@
-import { FiHome, FiUsers, FiUser, FiMusic, FiBriefcase } from "react-icons/fi";
+import { FiHome, FiUsers, FiUser, FiMusic } from "react-icons/fi";
+import { HiOutlinePaperAirplane } from "react-icons/hi2";
 
 export const UserRole = {
   SUPER_ADMIN: "super_admin",
@@ -18,7 +19,11 @@ export const DASHBOARD_NAV_ITEMS = {
   [UserRole.SUPER_ADMIN]: [
     { href: "/", label: "Home", icon: FiHome },
     { href: "/users", label: "Users", icon: FiUsers },
-    { href: "/artist-managers", label: "Artist Managers", icon: FiBriefcase },
+    {
+      href: "/invitations",
+      label: "Invitations",
+      icon: HiOutlinePaperAirplane,
+    },
     { href: "/artists", label: "Artists", icon: FiUser },
   ],
 
@@ -84,6 +89,9 @@ export const UserStatusMeta: Record<
 };
 
 export const USER_STATUS_ARR = [
-  { value: UserStatus.ACTIVE, label: "Active" },
-  { value: UserStatus.INACTIVE, label: "Inactive" },
+  { value: UserStatus.ACTIVE, label: UserStatusMeta[UserStatus.ACTIVE].label },
+  {
+    value: UserStatus.INACTIVE,
+    label: UserStatusMeta[UserStatus.INACTIVE].label,
+  },
 ];

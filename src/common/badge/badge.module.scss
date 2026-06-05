@@ -35,3 +35,18 @@
   background: $color-hover;
   color: $color-text;
 }
+
+.pending {
+  background: $color-warning-bg;
+  color: #e37400;
+}
+
+.rejected {
+  background: $color-danger-bg;
+  color: $color-danger;
+}
+
+.invited {
+  background: $color-active;
+  color: $color-primary;
+}
