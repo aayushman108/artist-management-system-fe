@@ -1,5 +1,5 @@
 import { type RouteObject, Navigate } from "react-router-dom";
-import { Login, Signup, UsersPage } from "../components";
+import { DashboardLayout, Login, Signup, UsersPage } from "../components";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { PublicRoute } from "./PublicRoute";
 
@@ -22,24 +22,49 @@ export const Routes: RouteObject[] = [
     element: <ProtectedRoute />,
     children: [
       {
-        path: "",
-        element: <div>Home</div>,
-      },
-      {
-        path: "users",
-        element: <UsersPage />,
-      },
-      {
-        path: "artist-managers",
-        element: <div>Artist Manager</div>,
-      },
-      {
-        path: "artists",
-        element: <div>Artists</div>,
-      },
-      {
-        path: "musics",
-        element: <div>Musics</div>,
+        element: <DashboardLayout />,
+        children: [
+          {
+            index: true,
+            element: <div>Home</div>,
+          },
+          {
+            path: "users",
+            element: <UsersPage />,
+          },
+          {
+            path: "users/super-admin/:userId",
+            element: <div>User Details</div>,
+          },
+          {
+            path: "users/artist-manager/:userId",
+            element: <div>Artist Manager Details</div>,
+          },
+          {
+            path: "users/artist-manager/:userId/artists/:artistId",
+            element: <div>Artist Details</div>,
+          },
+          {
+            path: "users/artist/:userId",
+            element: <div>Artist Details</div>,
+          },
+          {
+            path: "artist-managers",
+            element: <div>Artist Manager</div>,
+          },
+          {
+            path: "artists",
+            element: <div>Artists</div>,
+          },
+          {
+            path: "artists/:artistId",
+            element: <div>Artist Details</div>,
+          },
+          {
+            path: "musics",
+            element: <div>Musics</div>,
+          },
+        ],
       },
     ],
   },

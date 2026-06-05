@@ -1,0 +1,56 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  width: 100%;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: $font-weight-medium;
+  color: $color-text-dark;
+}
+
+.wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  position: absolute;
+  left: 12px;
+  font-size: 18px;
+  color: $color-text;
+  pointer-events: none;
+}
+
+.input {
+  @include input-base;
+  padding-left: 38px;
+}
+
+.inputSm {
+  padding: 0 $spacing-2sm;
+  padding-left: 34px;
+  font-size: $font-size-13;
+  height: 32px;
+}
+
+.sm {
+  .label {
+    font-size: $font-size-xxs;
+    font-weight: $font-weight-bold;
+    color: $color-text;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .icon {
+    font-size: 16px;
+    left: 10px;
+  }
+}

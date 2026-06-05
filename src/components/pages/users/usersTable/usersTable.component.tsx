@@ -1,8 +1,12 @@
 import { useCallback } from "react";
 import styles from "./usersTable.module.scss";
 import { HiOutlineEye, HiOutlinePencil, HiOutlineTrash } from "react-icons/hi";
-import { Table, type Column } from "../../common";
-import type { UserRoleType } from "../../constants/general.constant";
+import {
+  UserRoleMeta,
+  UserStatusMeta,
+  type UserRoleType,
+} from "../../../../constants/general.constant";
+import { Badge, Table, type Column } from "../../../../common";
 
 interface IUser {
   id: string;
@@ -51,27 +55,36 @@ export function UsersTable({
     {
       header: "Role",
       key: "role",
-      render: (user) => (
-        <span className={styles.roleBadge}>{user.role.toLowerCase()}</span>
-      ),
+      render: (user) => {
+        return (
+          <Badge
+            variant={UserRoleMeta[user.role].badgeVariant}
+            label={UserRoleMeta[user.role].label}
+          />
+        );
+      },
     },
     {
       header: "Status",
       key: "status",
-      render: (user) => (
-        <span
-          className={`${styles.statusBadge} ${
-            styles[user.status.toLowerCase()]
-          }`}
-        >
-          {user.status.toLowerCase()}
-        </span>
-      ),
+      render: (user) => {
+        return (
+          <Badge
+            variant={
+              UserStatusMeta[user.status as keyof typeof UserStatusMeta]
+                .badgeVariant
+            }
+            label={
+              UserStatusMeta[user.status as keyof typeof UserStatusMeta].label
+            }
+          />
+        );
+      },
     },
     {
       header: "Created By",
       key: "created_by",
-      render: (user) => <span>{user.created_by}</span>,
+      render: (user) => <span>{user.created_by || "N/A"}</span>,
     },
   ];
 

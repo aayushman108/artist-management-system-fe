@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useRoutes } from "react-router-dom";
-import { Routes } from "../../routing/routes.app";
+import { Outlet } from "react-router-dom";
 import { Sidebar } from "./sidebar";
 import { Header } from "./header";
 import styles from "./dashboardLayout.module.scss";
 
 export function DashboardLayout() {
-  const routes = useRoutes(Routes);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
@@ -18,7 +16,9 @@ export function DashboardLayout() {
         }`}
       >
         <Header sidebarOpen={sidebarOpen} />
-        <div className={styles.pageContent}>{routes}</div>
+        <div className={styles.pageContent}>
+          <Outlet />
+        </div>
       </div>
     </div>
   );

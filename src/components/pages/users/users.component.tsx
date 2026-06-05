@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useQuery, useUsers } from "../../../hooks";
-import { UsersTable } from "../../usersTable";
-import { UsersFilters } from "../../usersFilter";
+import { UsersFilters } from "./usersFilter";
+import { UsersTable } from "./usersTable";
 
 export function UsersPage() {
   const { users, loading } = useUsers();

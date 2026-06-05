@@ -1,4 +1,4 @@
-export * from "./userUsers.hook";
+export * from "./useUsers.hook";
 export * from "./useQuery.hook";
 export * from "./useUpdateQuery.hook";
 export * from "./userPermissions.hook";

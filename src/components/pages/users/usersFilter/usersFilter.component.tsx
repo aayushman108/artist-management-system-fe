@@ -1,13 +1,12 @@
 import { useState, type ChangeEvent } from "react";
 import styles from "./usersFilter.module.scss";
 import { HiOutlineSearch, HiOutlineRefresh } from "react-icons/hi";
-import { Button } from "../../common/button";
-import { Select } from "../../common/select";
-import { useQuery, useUpdateQuery } from "../../hooks";
+import { useQuery, useUpdateQuery } from "../../../../hooks";
+import { Button, SearchInput, Select } from "../../../../common";
 import {
   USER_ROLE_ARR,
   USER_STATUS_ARR,
-} from "../../constants/general.constant";
+} from "../../../../constants/general.constant";
 
 export function UsersFilters() {
   const query = useQuery();
@@ -54,19 +53,15 @@ export function UsersFilters() {
 
   return (
     <form className={styles.filterGroup}>
-      <div className={styles.inputWrapper}>
-        <label>Search</label>
-        <div className={styles.searchInput}>
-          <HiOutlineSearch />
-          <input
-            type="text"
-            placeholder="Name or email..."
-            name="search"
-            value={filters.search}
-            onChange={handleChange}
-          />
-        </div>
-      </div>
+      <SearchInput
+        className={styles.searchInput}
+        label="Search"
+        size="sm"
+        placeholder="Name or email..."
+        name="search"
+        value={filters.search}
+        onChange={handleChange}
+      />
 
       <Select
         label="Role"
