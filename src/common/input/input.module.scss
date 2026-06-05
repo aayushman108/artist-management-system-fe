@@ -29,6 +29,7 @@
 
 .input {
   @include input-base;
+  font-size: $font-size-sm;
 
   &.hasIcon {
     padding-left: 42px;

@@ -38,6 +38,7 @@
 
 .trigger {
   @include input-base;
+  font-size: $font-size-sm;
   display: flex;
   align-items: center;
   gap: $spacing-sm;
@@ -87,7 +88,7 @@
 
 .valueText {
   flex: 1;
-  font-size: $font-size-base;
+  font-size: $font-size-sm;
   color: $color-text-dark;
   @include truncate;
 
@@ -167,7 +168,7 @@
   padding: 6px 12px;
   margin: 2px 4px;
   border-radius: $border-radius-sm;
-  font-size: $font-size-base;
+  font-size: $font-size-sm;
   color: $color-text-dark;
   cursor: pointer;
   transition:
