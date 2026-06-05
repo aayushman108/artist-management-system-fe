@@ -58,6 +58,14 @@ async function logout(): Promise<Api.BaseResponse<void>> {
   return res.data;
 }
 
+// CHECK SIGNUP ELEGIBILITY
+async function checkSignupEligibility(): Promise<
+  Api.BaseResponse<User.ISignupEligibilityResponse>
+> {
+  const res = await api.get("/auth/signup-eligibility");
+  return res.data;
+}
+
 export const authService = {
   signup,
   verifyEmail,
@@ -65,4 +73,5 @@ export const authService = {
   refreshToken,
   getMyDetails,
   logout,
+  checkSignupEligibility,
 };

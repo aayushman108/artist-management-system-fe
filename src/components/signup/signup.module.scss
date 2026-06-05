@@ -1,4 +1,5 @@
 @use "../../styles/variables" as *;
+@use "sass:color";
 
 .signupContainer {
   display: flex;
@@ -17,7 +18,7 @@
     padding: 2.5rem 2rem;
     border-radius: $border-radius-lg;
     box-shadow: $shadow-card;
-    border: 1px solid $color-border;
+    border: 1px solid color.mix($color-primary, $color-border, 18%);
 
     .header {
       text-align: center;
@@ -31,17 +32,18 @@
         object-fit: contain;
       }
 
+      .projectName {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        color: $color-primary;
+        margin: 0;
+      }
+
       h1 {
         font-size: $font-size-xl;
         font-weight: $font-weight-bold;
         color: $color-text-dark;
         margin: 0 0 $spacing-sm 0;
-      }
-
-      p {
-        font-size: $font-size-base;
-        color: $color-text;
-        margin: 0;
       }
     }
 
@@ -78,7 +80,7 @@
     }
 
     .globalError {
-      background: rgba($color-danger, 0.08);
+      background: $color-danger-bg;
       color: $color-danger;
       padding: $spacing-sm $spacing-md;
       border-radius: $border-radius-sm;
@@ -106,6 +108,13 @@
           text-decoration: underline;
         }
       }
+    }
+
+    &.loadingCard {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 320px;
     }
   }
 }

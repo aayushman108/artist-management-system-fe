@@ -6,7 +6,7 @@ import { validateData } from "../../utils/validation";
 import styles from "./login.module.scss";
 
 export function LoginForm() {
-  const { login } = useAuth();
+  const { login, error: authError, clearError, isAuthLoading } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -42,10 +42,13 @@ export function LoginForm() {
         return newErrors;
       });
     }
+
+    if (authError) clearError();
   };
 
   return (
     <form className={styles.loginForm} onSubmit={handleSubmit} noValidate>
+      {authError && <div className={styles.authError}>{authError}</div>}
       <Input
         label="Email"
         name="email"
@@ -64,7 +67,9 @@ export function LoginForm() {
         required
         error={error.password}
       />
-      <Button type="submit">Sign In</Button>
+      <Button type="submit" isLoading={isAuthLoading}>
+        Sign In
+      </Button>
       <div className={styles.forgotPassword}>
         <a href="/forgot-password">Forgot your password?</a>
       </div>

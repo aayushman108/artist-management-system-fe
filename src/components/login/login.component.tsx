@@ -6,9 +6,13 @@ export function Login() {
     <div className={styles.loginContainer}>
       <div className={styles.loginCard}>
         <div className={styles.header}>
-          <img src="/logo.png" alt="Company Logo" className={styles.logo} />
-          <h1>Welcome back</h1>
-          <p>Sign in to manage your profile</p>
+          <img
+            src="/logo.png"
+            alt="Artist Management System"
+            className={styles.logo}
+          />
+          <h1>Welcome back to</h1>
+          <p className={styles.projectName}>Artist Management System</p>
         </div>
         <LoginForm />
         <div className={styles.footer}>

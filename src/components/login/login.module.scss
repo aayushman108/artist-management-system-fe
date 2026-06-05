@@ -1,4 +1,5 @@
 @use "../../styles/variables" as *;
+@use "sass:color";
 
 .loginContainer {
   display: flex;
@@ -17,7 +18,7 @@
     padding: 2.5rem 2rem;
     border-radius: $border-radius-lg;
     box-shadow: $shadow-card;
-    border: 1px solid $color-border;
+    border: 1px solid color.mix($color-primary, $color-border, 18%);
 
     .header {
       text-align: center;
@@ -29,6 +30,13 @@
         height: 80px;
         width: auto;
         object-fit: contain;
+      }
+
+      .projectName {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        color: $color-primary;
+        margin: 0;
       }
 
       h1 {
@@ -49,6 +57,15 @@
       display: flex;
       flex-direction: column;
       gap: $spacing-md;
+
+      .authError {
+        padding: $spacing-sm $spacing-md;
+        background: $color-danger-bg;
+        color: $color-danger;
+        font-size: $font-size-sm;
+        border-radius: $border-radius-sm;
+        text-align: center;
+      }
 
       .forgotPassword {
         text-align: right;

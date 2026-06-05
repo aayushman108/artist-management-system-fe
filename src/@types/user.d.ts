@@ -42,4 +42,8 @@ declare namespace User {
   }
 
   type IPaginatedUserResponse = Api.PaginatedData<IExtendedUser>;
+
+  interface ISignupEligibilityResponse {
+    isSignupAllowed: boolean;
+  }
 }

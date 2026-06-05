@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { AuthContext } from "./authContext";
 import { authService, type ILoginPayload } from "../../services/auth.service";
 import type { User } from "../../@types/user";
+import { AxiosError } from "axios";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User.IUser | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAuthLoading, setIsAuthLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -31,8 +33,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsAuthenticated(true);
       setUser(res.data.user);
       localStorage.setItem("accessToken", res.data.accessToken);
-    } catch (error) {
-      console.error("Login failed:", error);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        setError(error.response?.data.message || "Login failed");
+      }
     }
   };
 
@@ -43,9 +47,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(null);
       localStorage.removeItem("accessToken");
     } catch (error) {
-      console.error("Logout failed:", error);
+      if (error instanceof AxiosError) {
+        setError(error.response?.data.message || "Logout failed");
+      }
     }
   };
+
+  const clearError = () => setError(null);
 
   return (
     <AuthContext.Provider
@@ -55,6 +63,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isAuthLoading,
         login: handleLogin,
         logout: handleLogout,
+        error,
+        clearError,
       }}
     >
       {children}

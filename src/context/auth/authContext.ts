@@ -8,6 +8,8 @@ export interface AuthContextType {
   isAuthLoading: boolean;
   login: (payload: ILoginPayload) => Promise<void>;
   logout: () => Promise<void>;
+  error: string | null;
+  clearError: () => void;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
