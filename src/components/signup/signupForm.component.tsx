@@ -13,7 +13,8 @@ export function SignupForm() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    companyName: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -36,7 +37,7 @@ export function SignupForm() {
 
     const payload = { ...formData, role: UserRole.SUPER_ADMIN };
     // Validate form data against schema before submitting
-    const validatedData = validateData(authSchema.signupSchema, payload);
+    const validatedData = validateData(authSchema.signupFormSchema, payload);
     if (!validatedData.success) {
       setError(validatedData.errors);
       return;
@@ -46,7 +47,10 @@ export function SignupForm() {
     setIsSubmitting(true);
 
     try {
-      const response = await authService.signup(payload);
+      const apiPayload = { ...validatedData.data };
+
+      delete apiPayload.confirmPassword;
+      const response = await authService.signup(apiPayload);
       setSuccessMessage(response?.message);
       if (response?.data?.token) {
         setVerificationToken(response.data.token);
@@ -116,13 +120,22 @@ export function SignupForm() {
             <div className={styles.globalError}>{error._global}</div>
           )}
           <Input
-            label="Company Name"
-            name="companyName"
+            label="First Name"
+            name="firstName"
             type="text"
-            value={formData.companyName}
+            value={formData.firstName}
             onChange={handleChange}
             required
-            error={error.companyName}
+            error={error.firstName}
+          />
+          <Input
+            label="Last Name"
+            name="lastName"
+            type="text"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+            error={error.lastName}
           />
           <Input
             label="Email"
@@ -152,11 +165,7 @@ export function SignupForm() {
             error={error.confirmPassword}
           />
 
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            isLoading={isSubmitting}
-          >
+          <Button type="submit" isLoading={isSubmitting}>
             Create Account
           </Button>
         </form>

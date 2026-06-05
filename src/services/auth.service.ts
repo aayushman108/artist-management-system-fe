@@ -3,7 +3,8 @@ import type { UserRoleType } from "../constants/general.constant";
 import api from "../lib/api";
 
 interface ISignupPayload {
-  companyName: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   role: UserRoleType;
