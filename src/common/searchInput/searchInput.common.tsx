@@ -2,8 +2,10 @@ import React from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import styles from "./searchInput.module.scss";
 
-interface SearchInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
+interface SearchInputProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "type" | "size"
+> {
   label?: string;
   size?: "sm" | "md";
 }
@@ -18,7 +20,9 @@ export function SearchInput({
   const inputId = id || "search";
 
   return (
-    <div className={`${styles.inputGroup} ${size === "sm" ? styles.sm : ""} ${className}`}>
+    <div
+      className={`${styles.inputGroup} ${size === "sm" ? styles.sm : ""} ${className}`}
+    >
       {label && (
         <label htmlFor={inputId} className={styles.label}>
           {label}
