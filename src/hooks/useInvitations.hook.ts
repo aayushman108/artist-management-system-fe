@@ -6,7 +6,7 @@ import { getErrorMessage } from "../utils";
 import type { InvitationRequestStatusType } from "../constants";
 import { useUpdateQuery } from "./useUpdateQuery.hook";
 
-export const useInvitations = () => {
+export const useInvitations = (enabled = true) => {
   const query = useQuery();
   const updateQuery = useUpdateQuery();
 
@@ -46,8 +46,10 @@ export const useInvitations = () => {
 
   /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
-    fetchInvitations();
-  }, [fetchInvitations]);
+    if (enabled) {
+      fetchInvitations();
+    }
+  }, [fetchInvitations, enabled]);
   /* eslint-enable react-hooks/set-state-in-effect */
 
   const handleSendInvite = useCallback(

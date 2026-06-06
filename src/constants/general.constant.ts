@@ -29,6 +29,11 @@ export const DASHBOARD_NAV_ITEMS = {
 
   [UserRole.ARTIST_MANAGER]: [
     { href: "/", label: "Home", icon: FiHome },
+    {
+      href: "/invitations",
+      label: "Invitations",
+      icon: HiOutlinePaperAirplane,
+    },
     { href: "/artists", label: "Artists", icon: FiUser },
   ],
 

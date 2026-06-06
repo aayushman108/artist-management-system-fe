@@ -7,9 +7,14 @@ import { SentInvitationsFilters } from "./sentInvitationsFilter";
 import { SentInvitationsTable } from "./sentInvitationsTable";
 import { InviteUserModal } from "./inviteUserModal";
 import { Button } from "../../../common";
+import { useAuth } from "../../../context";
+import { UserRole } from "../../../constants/general.constant";
 import styles from "./invitations.module.scss";
 
 export function InvitationsPage() {
+  const { user } = useAuth();
+  const isSuperAdmin = user?.role === UserRole.SUPER_ADMIN;
+
   const {
     data: invitations,
     loading,
@@ -18,7 +23,7 @@ export function InvitationsPage() {
     handleUpdateStatus,
     handleDelete,
     handlePageChange,
-  } = useInvitations();
+  } = useInvitations(isSuperAdmin);
 
   const {
     data: sentInvitations,
@@ -84,23 +89,25 @@ export function InvitationsPage() {
   return (
     <div className={styles.invitationsPageContainer}>
       {/* --- Invitation Requests Section --- */}
-      <div className={styles.invitationRequestsContainer}>
-        <h3>Invitation Requests</h3>
-        <InvitationsFilters />
-        <InvitationsTable
-          data={remappedInvitations}
-          isLoading={loading}
-          pagination={pagination}
-          onPageChange={handlePageChange}
-          onSendInvite={async (id: string) => {
-            await handleSendInvite(id);
-            await fetchSentInvitations();
-          }}
-          onUpdateStatus={handleUpdateStatus}
-          onDelete={handleDelete}
-          mutationLoading={mutationLoading}
-        />
-      </div>
+      {isSuperAdmin && (
+        <div className={styles.invitationRequestsContainer}>
+          <h3>Invitation Requests</h3>
+          <InvitationsFilters />
+          <InvitationsTable
+            data={remappedInvitations}
+            isLoading={loading}
+            pagination={pagination}
+            onPageChange={handlePageChange}
+            onSendInvite={async (id: string) => {
+              await handleSendInvite(id);
+              await fetchSentInvitations();
+            }}
+            onUpdateStatus={handleUpdateStatus}
+            onDelete={handleDelete}
+            mutationLoading={mutationLoading}
+          />
+        </div>
+      )}
 
       {/* --- Sent Invitations Section --- */}
       <div className={styles.sentInvitationsContainer}>

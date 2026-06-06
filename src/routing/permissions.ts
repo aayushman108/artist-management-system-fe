@@ -9,7 +9,7 @@ export const ROLE_PERMISSIONS: Record<UserRoleType, string[]> = {
     "/invitations",
   ],
 
-  [UserRole.ARTIST_MANAGER]: ["/", "/artists"],
+  [UserRole.ARTIST_MANAGER]: ["/", "/artists", "/invitations"],
 
   [UserRole.ARTIST]: ["/", "/musics"],
 };
