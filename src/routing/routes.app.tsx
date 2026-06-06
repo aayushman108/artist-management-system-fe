@@ -1,5 +1,6 @@
 import { type RouteObject, Navigate } from "react-router-dom";
 import {
+  AcceptInvite,
   DashboardLayout,
   InvitationsPage,
   Login,
@@ -20,6 +21,10 @@ export const Routes: RouteObject[] = [
       {
         path: "signup",
         element: <Signup />,
+      },
+      {
+        path: "accept-invite",
+        element: <AcceptInvite />,
       },
     ],
   },

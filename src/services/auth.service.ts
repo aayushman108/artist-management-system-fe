@@ -66,6 +66,15 @@ async function checkSignupEligibility(): Promise<
   return res.data;
 }
 
+// VERIFY INVITE
+async function verifyInvite(
+  token: string,
+  password: string,
+): Promise<Api.BaseResponse<null>> {
+  const res = await api.post("/users/verify-invite", { token, password });
+  return res.data;
+}
+
 export const authService = {
   signup,
   verifyEmail,
@@ -74,4 +83,5 @@ export const authService = {
   getMyDetails,
   logout,
   checkSignupEligibility,
+  verifyInvite,
 };
