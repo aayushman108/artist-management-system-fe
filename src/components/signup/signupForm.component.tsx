@@ -47,9 +47,8 @@ export function SignupForm() {
     setIsSubmitting(true);
 
     try {
-      const apiPayload = { ...validatedData.data };
+      const { confirmPassword: _, ...apiPayload } = validatedData.data;
 
-      delete apiPayload.confirmPassword;
       const response = await authService.signup(apiPayload);
       setSuccessMessage(response?.message);
       if (response?.data?.token) {
