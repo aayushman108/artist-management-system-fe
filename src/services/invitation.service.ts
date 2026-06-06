@@ -48,6 +48,14 @@ async function getSentInvitations(
   return res.data;
 }
 
+// INVITE USER
+async function inviteUser(
+  payload: Invitation.ICreateInvitationRequestPayload,
+): Promise<Api.BaseResponse<null>> {
+  const res = await api.post("/users/invite", payload);
+  return res.data;
+}
+
 export const invitationService = {
   sendInvitationRequest,
   getInvitationRequests,
@@ -55,4 +63,5 @@ export const invitationService = {
   updateInvitationStatus,
   deleteInvitation,
   getSentInvitations,
+  inviteUser,
 };

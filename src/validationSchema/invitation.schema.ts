@@ -23,6 +23,8 @@ const invitationRequestSchema = z.object({
   ),
 });
 
+const createInviationSchema = invitationRequestSchema;
+
 const updateStatusSchema = z.object({
   status: z.enum(
     [InvitationRequestStatus.PENDING, InvitationRequestStatus.REJECTED],
@@ -32,5 +34,6 @@ const updateStatusSchema = z.object({
 
 export const invitationSchema = {
   invitationRequestSchema,
+  createInviationSchema,
   updateStatusSchema,
 };

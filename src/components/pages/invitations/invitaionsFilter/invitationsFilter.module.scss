@@ -5,8 +5,7 @@
   display: flex;
   align-items: flex-end;
   gap: $spacing-2sm;
-  flex-wrap: wrap;
-  padding: $spacing-md 0;
+  flex: 1;
 
   .searchInput {
     max-width: 280px;

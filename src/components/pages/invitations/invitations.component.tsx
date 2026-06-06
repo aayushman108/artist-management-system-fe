@@ -1,9 +1,12 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { HiOutlinePlus } from "react-icons/hi";
 import { useInvitations, useQuery, useSentInvitations } from "../../../hooks";
 import { InvitationsFilters } from "./invitaionsFilter";
 import { InvitationsTable } from "./invitationsTable";
 import { SentInvitationsFilters } from "./sentInvitationsFilter";
 import { SentInvitationsTable } from "./sentInvitationsTable";
+import { InviteUserModal } from "./inviteUserModal";
+import { Button } from "../../../common";
 import styles from "./invitations.module.scss";
 
 export function InvitationsPage() {
@@ -25,6 +28,8 @@ export function InvitationsPage() {
   } = useSentInvitations();
 
   const query = useQuery();
+
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
 
   const remappedInvitations = useMemo(() => {
     return Array.isArray(invitations?.data)
@@ -100,7 +105,12 @@ export function InvitationsPage() {
       {/* --- Sent Invitations Section --- */}
       <div className={styles.sentInvitationsContainer}>
         <h3>Sent Invitations</h3>
-        <SentInvitationsFilters />
+        <div className={styles.filterRow}>
+          <SentInvitationsFilters />
+          <Button onClick={() => setIsInviteModalOpen(true)}>
+            <HiOutlinePlus size={16} /> Invite
+          </Button>
+        </div>
         <SentInvitationsTable
           data={remappedSentInvitations}
           isLoading={sentLoading}
@@ -108,6 +118,12 @@ export function InvitationsPage() {
           onPageChange={handleSentPageChange}
         />
       </div>
+
+      <InviteUserModal
+        isOpen={isInviteModalOpen}
+        onClose={() => setIsInviteModalOpen(false)}
+        fetchSentInvitations={fetchSentInvitations}
+      />
     </div>
   );
 }

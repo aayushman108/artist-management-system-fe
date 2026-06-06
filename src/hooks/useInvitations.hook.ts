@@ -26,7 +26,7 @@ export const useInvitations = () => {
       status: query.status || undefined,
       role: query.role || undefined,
     }),
-    [query],
+    [query.page, query.limit, query.search, query.status, query.role],
   );
 
   const fetchInvitations = useCallback(async () => {

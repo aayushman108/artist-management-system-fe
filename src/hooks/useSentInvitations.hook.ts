@@ -22,7 +22,7 @@ export const useSentInvitations = () => {
       status: query.s_status || undefined,
       role: query.s_role || undefined,
     }),
-    [query],
+    [query.s_page, query.s_limit, query.s_search, query.s_status, query.s_role],
   );
 
   const fetchSentInvitations = useCallback(async () => {

@@ -3,7 +3,7 @@ import {
   type UserRoleType,
 } from "../../../../constants/general.constant";
 import { Badge, Table, type Column } from "../../../../common";
-import { InvitationRequestStatusMeta } from "../../../../constants";
+import { InvitationStatusMeta } from "../../../../constants";
 
 interface ISentInvitation {
   id: string;
@@ -58,13 +58,13 @@ export function SentInvitationsTable({
         return (
           <Badge
             variant={
-              InvitationRequestStatusMeta[
-                item.status as keyof typeof InvitationRequestStatusMeta
+              InvitationStatusMeta[
+                item.status as keyof typeof InvitationStatusMeta
               ].badgeVariant
             }
             label={
-              InvitationRequestStatusMeta[
-                item.status as keyof typeof InvitationRequestStatusMeta
+              InvitationStatusMeta[
+                item.status as keyof typeof InvitationStatusMeta
               ].label
             }
           />
