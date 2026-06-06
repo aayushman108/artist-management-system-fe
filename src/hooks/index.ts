@@ -4,3 +4,4 @@ export * from "./useUpdateQuery.hook";
 export * from "./userPermissions.hook";
 export * from "./useDebounce.hook";
 export * from "./useInvitations.hook";
+export * from "./useSentInvitations.hook";

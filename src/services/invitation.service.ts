@@ -40,10 +40,19 @@ async function deleteInvitation(id: string): Promise<Api.BaseResponse<null>> {
   return res.data;
 }
 
+// GET SENT INVITATIONS
+async function getSentInvitations(
+  params?: Invitation.ISentInvitationParams,
+): Promise<Api.PaginatedResponse<Invitation.ISentInvitation>> {
+  const res = await api.get("/invitation-requests/invitations", { params });
+  return res.data;
+}
+
 export const invitationService = {
   sendInvitationRequest,
   getInvitationRequests,
   sendInvitation,
   updateInvitationStatus,
   deleteInvitation,
+  getSentInvitations,
 };

@@ -3,9 +3,12 @@ import type { Invitation } from "../@types/invitation";
 import { useQuery } from "./useQuery.hook";
 import { invitationService } from "../services/invitation.service";
 import { getErrorMessage } from "../utils";
+import type { InvitationRequestStatusType } from "../constants";
+import { useUpdateQuery } from "./useUpdateQuery.hook";
 
 export const useInvitations = () => {
   const query = useQuery();
+  const updateQuery = useUpdateQuery();
 
   const [invitations, setInvitations] =
     useState<Invitation.IPaginatedInvitationResponse | null>(null);
@@ -64,7 +67,7 @@ export const useInvitations = () => {
   );
 
   const handleUpdateStatus = useCallback(
-    async (id: string, status: string) => {
+    async (id: string, status: InvitationRequestStatusType) => {
       try {
         setMutationLoading(true);
         setMutationError(null);
@@ -95,6 +98,13 @@ export const useInvitations = () => {
     [fetchInvitations],
   );
 
+  const handlePageChange = useCallback(
+    (page: number) => {
+      updateQuery({ page: String(page) });
+    },
+    [updateQuery],
+  );
+
   return {
     data: invitations,
     loading,
@@ -104,5 +114,6 @@ export const useInvitations = () => {
     handleSendInvite,
     handleUpdateStatus,
     handleDelete,
+    handlePageChange,
   };
 };

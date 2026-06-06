@@ -7,7 +7,7 @@ export const InvitationRequestStatus = {
 export type InvitationRequestStatusType =
   (typeof InvitationRequestStatus)[keyof typeof InvitationRequestStatus];
 
-export const InvitationStatusMeta: Record<
+export const InvitationRequestStatusMeta: Record<
   InvitationRequestStatusType,
   {
     label: string;
@@ -28,17 +28,62 @@ export const InvitationStatusMeta: Record<
   },
 };
 
-export const USER_INVITATION_STATUS_ARR = [
+export const INVITATION_REQUEST_STATUS_ARR = [
   {
     value: InvitationRequestStatus.PENDING,
-    label: InvitationStatusMeta[InvitationRequestStatus.PENDING].label,
+    label: InvitationRequestStatusMeta[InvitationRequestStatus.PENDING].label,
   },
   {
     value: InvitationRequestStatus.REJECTED,
-    label: InvitationStatusMeta[InvitationRequestStatus.REJECTED].label,
+    label: InvitationRequestStatusMeta[InvitationRequestStatus.REJECTED].label,
   },
   {
     value: InvitationRequestStatus.INVITED,
-    label: InvitationStatusMeta[InvitationRequestStatus.INVITED].label,
+    label: InvitationRequestStatusMeta[InvitationRequestStatus.INVITED].label,
+  },
+];
+
+export const InvitationStatus = {
+  PENDING: "pending",
+  ACCEPTED: "accepted",
+  EXPIRED: "expired",
+} as const;
+
+export type InvitationStatusType =
+  (typeof InvitationStatus)[keyof typeof InvitationStatus];
+
+export const InvitationStatusMeta: Record<
+  InvitationStatusType,
+  {
+    label: string;
+    badgeVariant: InvitationStatusType;
+  }
+> = {
+  [InvitationStatus.PENDING]: {
+    label: "Pending",
+    badgeVariant: InvitationStatus.PENDING,
+  },
+  [InvitationStatus.ACCEPTED]: {
+    label: "Accepted",
+    badgeVariant: InvitationStatus.ACCEPTED,
+  },
+  [InvitationStatus.EXPIRED]: {
+    label: "Expired",
+    badgeVariant: InvitationStatus.EXPIRED,
+  },
+};
+
+export const INVITATION_STATUS_ARR = [
+  {
+    value: InvitationStatus.PENDING,
+    label: InvitationStatusMeta[InvitationStatus.PENDING].label,
+  },
+  {
+    value: InvitationStatus.ACCEPTED,
+    label: InvitationStatusMeta[InvitationStatus.ACCEPTED].label,
+  },
+  {
+    value: InvitationStatus.EXPIRED,
+    label: InvitationStatusMeta[InvitationStatus.EXPIRED].label,
   },
 ];

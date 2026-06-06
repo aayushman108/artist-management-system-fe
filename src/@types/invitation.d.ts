@@ -1,7 +1,8 @@
 import type {
   InvitationRequestStatusType,
+  InvitationStatusType,
   UserRoleType,
-} from "../constants/general.constant";
+} from "../constants";
 
 declare namespace Invitation {
   interface IInvitationRequestParams {
@@ -35,4 +36,27 @@ declare namespace Invitation {
   }
 
   type IPaginatedInvitationResponse = Api.PaginatedData<IInvitation>;
+
+  interface ISentInvitationParams {
+    page?: number;
+    limit?: number;
+    search?: string;
+    status?: InvitationStatusType;
+    role?: UserRoleType;
+  }
+
+  interface ISentInvitation {
+    id: string;
+    email: string;
+    name: string;
+    role: UserRoleType;
+    status: InvitationStatusType;
+    invited_by: string;
+    expires_at: string;
+    accepted_at: string | null;
+    created_at: string;
+    updated_at: string;
+  }
+
+  type IPaginatedSentInvitationResponse = Api.PaginatedData<ISentInvitation>;
 }

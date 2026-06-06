@@ -1,19 +1,19 @@
 import { useState, type ChangeEvent } from "react";
-import styles from "./invitationsFilter.module.scss";
+import styles from "./sentInvitationsFilter.module.scss";
 import { HiOutlineSearch, HiOutlineRefresh } from "react-icons/hi";
 import { useQuery, useUpdateQuery } from "../../../../hooks";
 import { Button, SearchInput, Select } from "../../../../common";
 import { USER_ROLE_ARR } from "../../../../constants/general.constant";
-import { INVITATION_REQUEST_STATUS_ARR } from "../../../../constants";
+import { INVITATION_STATUS_ARR } from "../../../../constants";
 
-export function InvitationsFilters() {
+export function SentInvitationsFilters() {
   const query = useQuery();
   const updateQuery = useUpdateQuery();
 
   const [filters, setFilters] = useState({
-    search: query.search || "",
-    role: query.role || "",
-    status: query.status || "",
+    search: query.s_search || "",
+    role: query.s_role || "",
+    status: query.s_status || "",
   });
 
   const isAnyValuePresent = !!(
@@ -24,20 +24,20 @@ export function InvitationsFilters() {
 
   const handleClearFilters = () => {
     updateQuery({
-      page: "1",
-      search: null,
-      role: null,
-      status: null,
+      s_page: "1",
+      s_search: null,
+      s_role: null,
+      s_status: null,
     });
     setFilters({ search: "", role: "", status: "" });
   };
 
   const handleApplyFilters = () => {
     updateQuery({
-      page: "1",
-      search: filters.search || null,
-      role: filters.role || null,
-      status: filters.status || null,
+      s_page: "1",
+      s_search: filters.search || null,
+      s_role: filters.role || null,
+      s_status: filters.status || null,
     });
   };
 
@@ -77,7 +77,7 @@ export function InvitationsFilters() {
         size="sm"
         className={styles.filterSelect}
         placeholder="All Statuses"
-        options={INVITATION_REQUEST_STATUS_ARR}
+        options={INVITATION_STATUS_ARR}
         name="status"
         value={filters.status}
         onChange={handleChange}

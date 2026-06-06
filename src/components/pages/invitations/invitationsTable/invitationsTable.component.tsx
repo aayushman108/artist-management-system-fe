@@ -19,7 +19,7 @@ import {
 } from "../../../../common";
 import {
   InvitationRequestStatus,
-  InvitationStatusMeta,
+  InvitationRequestStatusMeta,
   type InvitationRequestStatusType,
 } from "../../../../constants";
 
@@ -36,7 +36,10 @@ interface IInvitationsTableProps {
   isLoading?: boolean;
   pagination?: Common.IPagination;
   onSendInvite: (id: string) => Promise<void>;
-  onUpdateStatus: (id: string, status: string) => Promise<void>;
+  onUpdateStatus: (
+    id: string,
+    status: InvitationRequestStatusType,
+  ) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
   onPageChange?: (page: number) => void;
   mutationLoading?: boolean;
@@ -87,13 +90,13 @@ export function InvitationsTable({
         return (
           <Badge
             variant={
-              InvitationStatusMeta[
-                user.status as keyof typeof InvitationStatusMeta
+              InvitationRequestStatusMeta[
+                user.status as keyof typeof InvitationRequestStatusMeta
               ].badgeVariant
             }
             label={
-              InvitationStatusMeta[
-                user.status as keyof typeof InvitationStatusMeta
+              InvitationRequestStatusMeta[
+                user.status as keyof typeof InvitationRequestStatusMeta
               ].label
             }
           />
@@ -204,7 +207,8 @@ export function InvitationsTable({
               : "Set as Pending"
           }
           message={
-            activeModal.invitation.status === InvitationRequestStatus.PENDING ? (
+            activeModal.invitation.status ===
+            InvitationRequestStatus.PENDING ? (
               <span>
                 Are you sure you want to reject the invitation for{" "}
                 <strong>{activeModal.invitation.name}</strong>?
