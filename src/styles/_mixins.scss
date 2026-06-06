@@ -57,7 +57,9 @@
   background-color: $color-bg;
   border: 1px solid $color-border;
   border-radius: $border-radius-sm;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
   font-family: inherit;
 
   &::placeholder {
@@ -75,4 +77,21 @@
     cursor: not-allowed;
     background-color: $color-bg-surface;
   }
+}
+
+// Action footer bar, always visible at the bottom of the modal viewport
+@mixin sticky-actions($bg: $color-bg) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: $spacing-sm $spacing-md;
+  border-top: 1px solid $color-border;
+  gap: $spacing-sm;
+  flex-shrink: 0;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: $bg;
+  z-index: 1;
 }
