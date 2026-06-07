@@ -64,6 +64,13 @@ export const UserRoleMeta: Record<
   },
 };
 
+export const DeleteType = {
+  HARD: "hard",
+  SOFT: "soft",
+} as const;
+
+export type DeleteTypeType = (typeof DeleteType)[keyof typeof DeleteType];
+
 export const USER_ROLE_ARR = [
   {
     value: UserRole.SUPER_ADMIN,

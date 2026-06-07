@@ -1,0 +1,43 @@
+@use "../../styles/variables" as *;
+
+.body {
+  color: $color-text;
+  line-height: 1.6;
+  font-size: $font-size-sm;
+  padding: $spacing-md;
+  .message {
+    margin: 0 0 $spacing-lg;
+  }
+  .descriptionsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2sm;
+    margin-bottom: $spacing-sm;
+    .description {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-3xs;
+      padding: $spacing-2sm $spacing-md;
+      border: 1px solid $color-border;
+      border-radius: $border-radius-md;
+      background: $color-bg-surface;
+
+      &.danger {
+        border-color: $color-danger-bg;
+        background: $color-danger-bg;
+      }
+
+      .descriptionLabel {
+        font-weight: $font-weight-semibold;
+        font-size: $font-size-sm;
+        color: $color-text-dark;
+      }
+
+      .descriptionText {
+        font-size: $font-size-sm;
+        color: $color-text;
+        line-height: 1.5;
+      }
+    }
+  }
+}
