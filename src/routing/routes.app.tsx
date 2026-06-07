@@ -1,6 +1,7 @@
 import { type RouteObject, Navigate } from "react-router-dom";
 import {
   AcceptInvite,
+  ArtistsPage,
   DashboardLayout,
   InvitationsPage,
   Login,
@@ -65,7 +66,7 @@ export const Routes: RouteObject[] = [
           },
           {
             path: "artists",
-            element: <div>Artists</div>,
+            element: <ArtistsPage />,
           },
           {
             path: "invitations",

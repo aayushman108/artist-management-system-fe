@@ -1,0 +1,48 @@
+@use "../../../../styles/variables" as *;
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 16px;
+
+  &:not(:last-child) {
+    margin-right: $spacing-xs;
+  }
+
+  &.view {
+    background: $color-active;
+    color: $color-primary;
+
+    &:hover {
+      background: $color-primary;
+      color: $color-bg;
+    }
+  }
+
+  &.edit {
+    background: $color-warning-bg;
+    color: $color-warning;
+
+    &:hover {
+      background: $color-warning;
+      color: $color-bg;
+    }
+  }
+
+  &.danger {
+    background: $color-danger-bg;
+    color: $color-danger;
+
+    &:hover {
+      background: $color-danger;
+      color: $color-bg;
+    }
+  }
+}
