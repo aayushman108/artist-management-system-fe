@@ -6,4 +6,5 @@ export * from "./useDebounce.hook";
 export * from "./useInvitations.hook";
 export * from "./useSentInvitations.hook";
 export * from "./useArtists.hook";
+export * from "./useMusics.hook";
 export * from "./useImportExport.hook";

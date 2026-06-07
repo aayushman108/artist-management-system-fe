@@ -5,6 +5,7 @@ import {
   DashboardLayout,
   InvitationsPage,
   Login,
+  MusicsPage,
   Signup,
   UsersPage,
 } from "../components";
@@ -69,16 +70,17 @@ export const Routes: RouteObject[] = [
             element: <ArtistsPage />,
           },
           {
+            path: "artists/:artistId",
+            element: <MusicsPage />,
+          },
+          {
             path: "invitations",
             element: <InvitationsPage />,
           },
-          {
-            path: "artists/:artistId",
-            element: <div>Artist Details</div>,
-          },
+
           {
             path: "musics",
-            element: <div>Musics</div>,
+            element: <MusicsPage />,
           },
         ],
       },

@@ -1,0 +1,42 @@
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/mixins" as *;
+
+.filterGroup {
+  display: flex;
+  align-items: flex-end;
+  gap: $spacing-2sm;
+  flex-wrap: wrap;
+  padding: $spacing-md 0;
+
+  .searchInput {
+    max-width: 280px;
+  }
+
+  .filterActions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-left: $spacing-xs;
+    align-self: flex-end;
+    padding-bottom: 1px;
+    flex-wrap: wrap;
+
+    button {
+      padding-left: $spacing-2sm !important;
+      padding-right: $spacing-2sm !important;
+      height: 32px !important;
+      font-size: $font-size-xs !important;
+      border-radius: $border-radius-md !important;
+    }
+  }
+
+  .btnContent {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    svg {
+      font-size: $font-size-sm;
+    }
+  }
+}
