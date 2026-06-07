@@ -87,7 +87,7 @@ export function DualDeleteConfirmationModal({
             isLoading={isCurrentlyLoading && activeAction === DeleteType.SOFT}
             disabled={softDeleteDisabled || isCurrentlyLoading}
           >
-            {softDeleteLabel}
+            {`${softDeleteLabel}`}
           </Button>
           <Button
             variant="danger"
@@ -108,7 +108,7 @@ export function DualDeleteConfirmationModal({
             {softDeleteDescription && (
               <div className={styles.description}>
                 <span className={styles.descriptionLabel}>
-                  {softDeleteLabel}
+                  {`${softDeleteLabel}${softDeleteDisabled ? " (Disabled)" : ""}`}
                 </span>
                 <span className={styles.descriptionText}>
                   {softDeleteDescription}
@@ -118,7 +118,7 @@ export function DualDeleteConfirmationModal({
             {hardDeleteDescription && (
               <div className={`${styles.description} ${styles.danger}`}>
                 <span className={styles.descriptionLabel}>
-                  {hardDeleteLabel}
+                  {`${hardDeleteLabel}${hardDeleteDisabled ? " (Disabled)" : ""}`}
                 </span>
                 <span className={styles.descriptionText}>
                   {hardDeleteDescription}
