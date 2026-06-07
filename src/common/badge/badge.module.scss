@@ -36,6 +36,11 @@
   color: $color-text;
 }
 
+.migrated {
+  background: $color-warning-bg;
+  color: #e37400;
+}
+
 .pending {
   background: $color-warning-bg;
   color: #e37400;

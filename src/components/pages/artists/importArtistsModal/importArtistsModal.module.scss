@@ -1,0 +1,159 @@
+@use "../../../../styles/variables" as *;
+
+.importModal {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  .csvUploader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-sm;
+    padding: $spacing-xl;
+    border: 2px dashed $color-border;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    transition:
+      border-color 0.2s,
+      background-color 0.2s;
+
+    &:hover {
+      border-color: $color-primary;
+      background-color: $color-active;
+    }
+
+    .uploadIcon {
+      font-size: 2rem;
+      color: $color-primary;
+    }
+
+    p {
+      margin: 0;
+      color: $color-text-dark;
+      font-weight: $font-weight-medium;
+    }
+
+    .fileSize {
+      font-size: $font-size-xs;
+      color: $color-text;
+    }
+  }
+
+  .errorBanner {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-2sm;
+    background: $color-danger-bg;
+    color: $color-danger;
+    border-radius: $border-radius-md;
+    font-size: $font-size-sm;
+
+    svg {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+  }
+
+  .successBanner {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-2sm;
+    background: #e6f4ea;
+    color: $color-success;
+    border-radius: $border-radius-md;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+
+    svg {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+  }
+  .validationSummary {
+    padding: $spacing-2sm;
+    background: $color-warning-bg;
+    border-radius: $border-radius-md;
+    font-size: $font-size-sm;
+
+    strong {
+      display: block;
+      margin-bottom: $spacing-xs;
+    }
+
+    .validationRow {
+      margin: $spacing-xs 0;
+      padding-left: $spacing-sm;
+      color: $color-warning;
+    }
+  }
+
+  .loadingBanner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-sm;
+    padding: $spacing-2sm;
+    background: $color-active;
+    color: $color-primary;
+    border-radius: $border-radius-md;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+  }
+
+  .tableWrapper {
+    max-height: 300px;
+    overflow: auto;
+    border: 1px solid $color-border;
+    border-radius: $border-radius-md;
+    .previewTable {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: $font-size-xs;
+
+      th,
+      td {
+        padding: $spacing-xs $spacing-sm;
+        text-align: left;
+        border-bottom: 1px solid $color-border;
+        white-space: nowrap;
+      }
+
+      th {
+        background: $color-bg-surface;
+        font-weight: $font-weight-semibold;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+
+      .errorRow {
+        background: $color-danger-bg;
+
+        td {
+          color: $color-danger;
+        }
+      }
+    }
+  }
+
+  .btnContent {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  .spinner {
+    animation: spin 0.8s linear infinite;
+    font-size: 1rem;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

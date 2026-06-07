@@ -37,4 +37,24 @@ declare namespace Artist {
   }
 
   type IPaginatedArtistResponse = Api.PaginatedData<IArtist>;
+
+  interface IImportJobResponse {
+    jobId: string;
+  }
+
+  interface IJobStatus {
+    id: string;
+    type: string;
+    status: ImportStatusType;
+    progress?: number;
+    total?: number;
+    result?: {
+      imported: number;
+      skipped: number;
+    };
+    error?: string;
+    created_by: string;
+    created_at: string;
+    updated_at: string;
+  }
 }

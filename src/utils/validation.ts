@@ -4,6 +4,13 @@ export type ValidationResult<T> =
   | { success: true; data: T; errors?: undefined }
   | { success: false; errors: Record<string, string>; data?: undefined };
 
+export const validateDate = (val: string) => {
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!dateRegex.test(val)) return false;
+  const date = new Date(val);
+  return !isNaN(date.getTime());
+};
+
 export const validateData = <T>(
   schema: ZodSchema<T>,
   data: unknown,

@@ -10,6 +10,7 @@ export const UserRole = {
 export const UserStatus = {
   ACTIVE: "active",
   INACTIVE: "inactive",
+  MIGRATED: "migrated",
 } as const;
 
 export type UserRoleType = (typeof UserRole)[keyof typeof UserRole];
@@ -98,6 +99,10 @@ export const UserStatusMeta: Record<
     label: "Inactive",
     badgeVariant: UserStatus.INACTIVE,
   },
+  [UserStatus.MIGRATED]: {
+    label: "Migrated",
+    badgeVariant: UserStatus.MIGRATED,
+  },
 };
 
 export const USER_STATUS_ARR = [
@@ -106,4 +111,25 @@ export const USER_STATUS_ARR = [
     value: UserStatus.INACTIVE,
     label: UserStatusMeta[UserStatus.INACTIVE].label,
   },
+  {
+    value: UserStatus.MIGRATED,
+    label: UserStatusMeta[UserStatus.MIGRATED].label,
+  },
 ];
+
+export const ImportStatus = {
+  IDLE: "idle",
+  PROCESSING: "processing",
+  COMPLETED: "completed",
+  FAILED: "failed",
+} as const;
+
+export type ImportStatusType = (typeof ImportStatus)[keyof typeof ImportStatus];
+
+export const Gender = {
+  MALE: "male",
+  FEMALE: "female",
+  OTHER: "other",
+} as const;
+
+export type GenderType = (typeof Gender)[keyof typeof Gender];
