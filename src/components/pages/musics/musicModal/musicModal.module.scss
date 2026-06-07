@@ -1,0 +1,27 @@
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/mixins" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+
+  .formBody {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: $spacing-md;
+
+    .globalError {
+      background: $color-danger-bg;
+      color: $color-danger;
+      padding: $spacing-sm $spacing-md;
+      border-radius: $border-radius-sm;
+      font-size: $font-size-sm;
+      text-align: center;
+    }
+  }
+
+  .actions {
+    @include sticky-actions;
+  }
+}

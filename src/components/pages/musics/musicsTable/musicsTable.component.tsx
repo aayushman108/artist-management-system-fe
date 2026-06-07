@@ -1,4 +1,12 @@
+import { useCallback, useState } from "react";
+import moment from "moment";
+import styles from "./musicsTable.module.scss";
+import {
+  HiOutlinePencil,
+  HiOutlineTrash,
+} from "react-icons/hi";
 import { Table, type Column } from "../../../../common";
+import { ConfirmationModal } from "../../../../common";
 
 interface IMusicRow {
   id: string;
@@ -8,22 +16,31 @@ interface IMusicRow {
   genre: string | null;
   language: string | null;
   duration: string | null;
+  releaseDate: string | null;
   createdAt: string;
 }
 
 interface IMusicsTableProps {
   data: IMusicRow[];
   isLoading?: boolean;
+  mutationLoading?: boolean;
   pagination?: Common.IPagination;
   onPageChange?: (page: number) => void;
+  onEdit: (music: IMusicRow) => void;
+  onDelete: (id: string) => void;
 }
 
 export function MusicsTable({
   data,
   isLoading,
+  mutationLoading,
   pagination,
   onPageChange,
+  onEdit,
+  onDelete,
 }: IMusicsTableProps) {
+  const [deleteTarget, setDeleteTarget] = useState<IMusicRow | null>(null);
+
   const columns: Column<IMusicRow>[] = [
     {
       header: "Title",
@@ -50,23 +67,81 @@ export function MusicsTable({
       key: "language",
       render: (music) => <span>{music.language || "-"}</span>,
     },
-
+    {
+      header: "Release Date",
+      key: "releaseDate",
+      render: (music) => (
+        <span>{music.releaseDate ? moment(music.releaseDate).format("ll") : "-"}</span>
+      ),
+    },
     {
       header: "Created At",
       key: "createdAt",
       render: (music) => (
-        <span>{new Date(music.createdAt).toLocaleDateString()}</span>
+        <span>{moment(music.createdAt).format("ll")}</span>
       ),
     },
   ];
 
+  const renderActions = useCallback(
+    (music: IMusicRow) => (
+      <>
+        <button
+          className={`${styles.actionBtn} ${styles.edit}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            onEdit(music);
+          }}
+          title="Edit"
+        >
+          <HiOutlinePencil />
+        </button>
+        <button
+          className={`${styles.actionBtn} ${styles.danger}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            setDeleteTarget(music);
+          }}
+          title="Delete"
+        >
+          <HiOutlineTrash />
+        </button>
+      </>
+    ),
+    [onEdit],
+  );
+
   return (
-    <Table<IMusicRow>
-      data={data}
-      columns={columns}
-      loading={isLoading}
-      pagination={pagination}
-      onPageChange={onPageChange}
-    />
+    <>
+      <Table<IMusicRow>
+        data={data}
+        columns={columns}
+        loading={isLoading}
+        pagination={pagination}
+        onPageChange={onPageChange}
+        actions={renderActions}
+      />
+
+      {deleteTarget && (
+        <ConfirmationModal
+          isOpen
+          onClose={() => setDeleteTarget(null)}
+          onConfirm={() => {
+            onDelete(deleteTarget.id);
+            setDeleteTarget(null);
+          }}
+          title="Delete Music"
+          message={
+            <span>
+              Are you sure you want to delete{" "}
+              <strong>{deleteTarget.title}</strong>?
+            </span>
+          }
+          confirmText="Delete"
+          confirmVariant="danger"
+          isLoading={mutationLoading}
+        />
+      )}
+    </>
   );
 }

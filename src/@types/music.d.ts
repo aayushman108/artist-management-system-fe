@@ -16,8 +16,26 @@ declare namespace Music {
     genre: string | null;
     language: string | null;
     duration: string | null;
+    release_date: string | null;
     created_at: string;
     updated_at: string;
+  }
+
+  interface ICreateMusicPayload {
+    title: string;
+    artistId?: string;
+    albumId?: string | null;
+    genre?: string | null;
+    language?: string | null;
+    releaseDate?: string | null;
+  }
+
+  interface IUpdateMusicPayload {
+    title?: string;
+    albumId?: string | null;
+    genre?: string | null;
+    language?: string | null;
+    releaseDate?: string | null;
   }
 
   type IPaginatedMusicResponse = Api.PaginatedData<IMusic>;

@@ -76,7 +76,9 @@ export function ConfirmationModal({
         </>
       }
     >
-      <div style={{ color: "#5f6368", lineHeight: 1.5 }}>{message}</div>
+      <div style={{ color: "#5f6368", lineHeight: 1.5, padding: "20px" }}>
+        {message}
+      </div>
     </Modal>
   );
 }

@@ -20,6 +20,9 @@ export const useMusics = (enabled = true) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const [mutationLoading, setMutationLoading] = useState(false);
+  const [mutationError, setMutationError] = useState<string | null>(null);
+
   const filters = useMemo(
     () => ({
       page: Number(query.page || 1),
@@ -59,11 +62,64 @@ export const useMusics = (enabled = true) => {
     [updateQuery],
   );
 
+  const handleCreate = useCallback(
+    async (payload: Music.ICreateMusicPayload) => {
+      try {
+        setMutationLoading(true);
+        setMutationError(null);
+        await musicService.createMusic(payload);
+        await fetchMusics();
+      } catch (error) {
+        setMutationError(getErrorMessage(error));
+      } finally {
+        setMutationLoading(false);
+      }
+    },
+    [fetchMusics],
+  );
+
+  const handleUpdate = useCallback(
+    async (id: string, payload: Music.IUpdateMusicPayload) => {
+      try {
+        setMutationLoading(true);
+        setMutationError(null);
+        await musicService.updateMusic(id, payload);
+        await fetchMusics();
+      } catch (error) {
+        setMutationError(getErrorMessage(error));
+      } finally {
+        setMutationLoading(false);
+      }
+    },
+    [fetchMusics],
+  );
+
+  const handleDelete = useCallback(
+    async (id: string) => {
+      try {
+        setMutationLoading(true);
+        setMutationError(null);
+        await musicService.deleteMusic(id);
+        await fetchMusics();
+      } catch (error) {
+        setMutationError(getErrorMessage(error));
+      } finally {
+        setMutationLoading(false);
+      }
+    },
+    [fetchMusics],
+  );
+
   return {
     data: musics,
     loading,
     error,
+    mutationLoading,
+    mutationError,
     handlePageChange,
+    handleCreate,
+    handleUpdate,
+    handleDelete,
     fetchMusics,
   };
 };
