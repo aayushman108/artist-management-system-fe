@@ -133,3 +133,15 @@ export const Gender = {
 } as const;
 
 export type GenderType = (typeof Gender)[keyof typeof Gender];
+
+export const GENDER_ARR = [
+  { value: Gender.MALE, label: "Male" },
+  {
+    value: Gender.FEMALE,
+    label: "Female",
+  },
+  {
+    value: Gender.OTHER,
+    label: "Other",
+  },
+];
