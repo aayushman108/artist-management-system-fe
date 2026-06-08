@@ -19,24 +19,37 @@ export function Pagination({
   if (totalPages <= 1 && !totalResults) return null;
 
   const getPageNumbers = () => {
-    const pages = [];
-    const maxVisible = 5;
+    const pages: (number | string)[] = [];
+    const maxVisible = 10;
 
     if (totalPages <= maxVisible) {
       for (let i = 1; i <= totalPages; i++) pages.push(i);
     } else {
       pages.push(1);
-      if (currentPage > 3) pages.push("...");
 
-      const start = Math.max(2, currentPage - 1);
-      const end = Math.min(totalPages - 1, currentPage + 1);
-
-      for (let i = start; i <= end; i++) {
-        if (!pages.includes(i)) pages.push(i);
+      if (currentPage > 3) {
+        pages.push("...");
       }
 
-      if (currentPage < totalPages - 2) pages.push("...");
-      if (!pages.includes(totalPages)) pages.push(totalPages);
+      let start = Math.max(2, currentPage - 2);
+      let end = Math.min(totalPages - 1, currentPage + 2);
+
+      if (currentPage <= 3) {
+        end = Math.min(5, totalPages - 1);
+      }
+      if (currentPage >= totalPages - 2) {
+        start = Math.max(totalPages - 4, 2);
+      }
+
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+
+      if (currentPage < totalPages - 2) {
+        pages.push("...");
+      }
+
+      pages.push(totalPages);
     }
     return pages;
   };
