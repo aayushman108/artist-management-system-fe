@@ -1,38 +1,29 @@
 import { useCallback, useState } from "react";
 import moment from "moment";
-import styles from "./musicsTable.module.scss";
+import styles from "./albumsTable.module.scss";
 import { HiOutlinePencil, HiOutlineTrash } from "react-icons/hi";
 import { Table, type Column } from "../../../../common";
 import { ConfirmationModal } from "../../../../common";
-import {
-  Module,
-  useMutationPermission,
-  usePermissions,
-} from "../../../../hooks";
+import { Module, useMutationPermission } from "../../../../hooks";
 
-interface IMusicRow {
+interface IAlbumRow {
   id: string;
-  artist: string;
-  album: string;
   title: string;
-  genre: string | null;
-  language: string | null;
-  duration: string | null;
   releaseDate: string | null;
   createdAt: string;
 }
 
-interface IMusicsTableProps {
-  data: IMusicRow[];
+interface IAlbumsTableProps {
+  data: IAlbumRow[];
   isLoading?: boolean;
   mutationLoading?: boolean;
   pagination?: Common.IPagination;
   onPageChange?: (page: number) => void;
-  onEdit: (music: IMusicRow) => void;
+  onEdit: (album: IAlbumRow) => void;
   onDelete: (id: string) => void;
 }
 
-export function MusicsTable({
+export function AlbumsTable({
   data,
   isLoading,
   mutationLoading,
@@ -40,67 +31,41 @@ export function MusicsTable({
   onPageChange,
   onEdit,
   onDelete,
-}: IMusicsTableProps) {
-  const [deleteTarget, setDeleteTarget] = useState<IMusicRow | null>(null);
+}: IAlbumsTableProps) {
+  const [deleteTarget, setDeleteTarget] = useState<IAlbumRow | null>(null);
 
-  const { isArtist } = usePermissions();
+  const canMutate = useMutationPermission(Module.ALBUMS);
 
-  const canMutate = useMutationPermission(Module.MUSICS);
-
-  const columns: Column<IMusicRow>[] = [
+  const columns: Column<IAlbumRow>[] = [
     {
       header: "Title",
       key: "title",
-      render: (music) => <span>{music.title}</span>,
-    },
-    ...(!isArtist
-      ? [
-          {
-            header: "Artist",
-            key: "artist",
-            render: (music) => <span>{music.artist}</span>,
-          },
-        ]
-      : []),
-    {
-      header: "Album",
-      key: "album",
-      render: (music) => <span>{music.album}</span>,
-    },
-    {
-      header: "Genre",
-      key: "genre",
-      render: (music) => <span>{music.genre || "-"}</span>,
-    },
-    {
-      header: "Language",
-      key: "language",
-      render: (music) => <span>{music.language || "-"}</span>,
+      render: (album) => <span>{album.title}</span>,
     },
     {
       header: "Release Date",
       key: "releaseDate",
-      render: (music) => (
+      render: (album) => (
         <span>
-          {music.releaseDate ? moment(music.releaseDate).format("ll") : "-"}
+          {album.releaseDate ? moment(album.releaseDate).format("ll") : "-"}
         </span>
       ),
     },
     {
       header: "Created At",
       key: "createdAt",
-      render: (music) => <span>{moment(music.createdAt).format("ll")}</span>,
+      render: (album) => <span>{moment(album.createdAt).format("ll")}</span>,
     },
   ];
 
   const renderActions = useCallback(
-    (music: IMusicRow) => (
+    (album: IAlbumRow) => (
       <>
         <button
           className={`${styles.actionBtn} ${styles.edit}`}
           onClick={(e) => {
             e.stopPropagation();
-            onEdit(music);
+            onEdit(album);
           }}
           title="Edit"
         >
@@ -110,7 +75,7 @@ export function MusicsTable({
           className={`${styles.actionBtn} ${styles.danger}`}
           onClick={(e) => {
             e.stopPropagation();
-            setDeleteTarget(music);
+            setDeleteTarget(album);
           }}
           title="Delete"
         >
@@ -123,7 +88,7 @@ export function MusicsTable({
 
   return (
     <>
-      <Table<IMusicRow>
+      <Table<IAlbumRow>
         data={data}
         columns={columns}
         loading={isLoading}
@@ -140,7 +105,7 @@ export function MusicsTable({
             onDelete(deleteTarget.id);
             setDeleteTarget(null);
           }}
-          title="Delete Music"
+          title="Delete Album"
           message={
             <span>
               Are you sure you want to delete{" "}

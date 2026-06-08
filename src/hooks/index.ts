@@ -8,3 +8,5 @@ export * from "./useSentInvitations.hook";
 export * from "./useArtists.hook";
 export * from "./useMusics.hook";
 export * from "./useImportExport.hook";
+export * from "./useAlbums.hook";
+export * from "./useMutationPermission.hook";

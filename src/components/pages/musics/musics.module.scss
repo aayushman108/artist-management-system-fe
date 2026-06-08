@@ -3,37 +3,60 @@
 .musicsPageContainer {
   display: flex;
   flex-direction: column;
-
-  .headerRow {
+  .tabBar {
     display: flex;
-    align-items: center;
-    gap: $spacing-md;
+    gap: 0;
+    border-bottom: 1px solid $color-border;
+    margin-bottom: $spacing-md;
+    .tab {
+      padding: $spacing-sm $spacing-lg;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      color: $color-text;
+      background: none;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s ease;
 
-    h3 {
-      font-weight: $font-weight-semibold;
-      font-size: $font-size-md;
-      color: $color-primary;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex: 1;
+      &:hover {
+        color: $color-text-dark;
+      }
 
-      &::after {
-        content: "";
-        height: 1px;
-        background: $gradient-primary;
-        flex: 1;
+      &.activeTab {
+        color: $color-primary;
+
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: -1px;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: $color-primary;
+          border-radius: 1px 1px 0 0;
+        }
       }
     }
   }
+}
 
-  .btnContent {
+.tabContent {
+  display: flex;
+  flex-direction: column;
+
+  .tabHeader {
     display: flex;
-    align-items: center;
-    gap: $spacing-sm;
+    justify-content: flex-end;
 
-    svg {
-      font-size: $font-size-sm;
+    .btnContent {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+
+      svg {
+        font-size: $font-size-sm;
+      }
     }
   }
 }

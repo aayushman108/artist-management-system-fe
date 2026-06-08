@@ -46,32 +46,58 @@ export const Routes: RouteObject[] = [
             element: <UsersPage />,
           },
           {
-            path: "users/super-admin/:userId",
-            element: <div>User Details</div>,
+            path: "users/artist-managers/:managerId",
+            element: (
+              <div>
+                <p>
+                  USERS --- Artist Manager's Details section wherein artist
+                  manager details with user detailsand profile details will be
+                  seen here.
+                </p>
+                <ArtistsPage />
+              </div>
+            ),
           },
           {
-            path: "users/artist-manager/:userId",
-            element: <div>Artist Manager Details</div>,
+            path: "users/artist-manager/:managerId/artists/:artistId",
+            element: (
+              <div>
+                <p>
+                  USERS --- Artist's Details section wherein artist details with
+                  user details will be seen here.
+                </p>
+                <MusicsPage />
+              </div>
+            ),
           },
           {
-            path: "users/artist-manager/:userId/artists/:artistId",
-            element: <div>Artist Details</div>,
+            path: "users/artists/:artistId",
+            element: (
+              <div>
+                <p>
+                  USERS --- Artist's Details section wherein artist details with
+                  user details will be seen here.
+                </p>
+                <MusicsPage />
+              </div>
+            ),
           },
-          {
-            path: "users/artist/:userId",
-            element: <div>Artist Details</div>,
-          },
-          {
-            path: "artist-managers",
-            element: <div>Artist Manager</div>,
-          },
+
           {
             path: "artists",
             element: <ArtistsPage />,
           },
           {
             path: "artists/:artistId",
-            element: <MusicsPage />,
+            element: (
+              <div>
+                <p>
+                  ARTISTS --- Artist's Details section wherein artist details
+                  with user details will be seen here.
+                </p>
+                <MusicsPage />
+              </div>
+            ),
           },
           {
             path: "invitations",

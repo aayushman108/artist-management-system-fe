@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useQuery } from "./useQuery.hook";
-import { musicService } from "../services/music.service";
+import { albumService } from "../services/album.service";
 import { getErrorMessage } from "../utils";
 import { useUpdateQuery } from "./useUpdateQuery.hook";
 import { useParams } from "react-router-dom";
 import { usePermissions } from "./userPermissions.hook";
 
-export const useMusics = (enabled = true) => {
+export const useAlbums = (enabled = true) => {
   const query = useQuery();
   const updateQuery = useUpdateQuery();
 
@@ -14,7 +14,7 @@ export const useMusics = (enabled = true) => {
   const { isArtist } = usePermissions();
   const artistId = isArtist ? undefined : params.artistId || undefined;
 
-  const [musics, setMusics] = useState<Music.IPaginatedMusicResponse | null>(
+  const [albums, setAlbums] = useState<Album.IPaginatedAlbumResponse | null>(
     null,
   );
   const [loading, setLoading] = useState(false);
@@ -28,19 +28,18 @@ export const useMusics = (enabled = true) => {
       page: Number(query.page || 1),
       limit: Number(query.limit || 10),
       search: query.search || undefined,
-      albumId: query.albumId || undefined,
     }),
-    [query.page, query.limit, query.search, query.albumId],
+    [query.page, query.limit, query.search],
   );
 
-  const fetchMusics = useCallback(async () => {
+  const fetchAlbums = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
       const response = artistId
-        ? await musicService.getMusicsByArtistId(artistId, filters)
-        : await musicService.getMyMusics(filters);
-      setMusics(response?.data);
+        ? await albumService.getAlbumsByArtistId(artistId, filters)
+        : await albumService.getMyAlbums(filters);
+      setAlbums(response?.data);
     } catch (error) {
       setError(getErrorMessage(error));
     } finally {
@@ -51,9 +50,9 @@ export const useMusics = (enabled = true) => {
   /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (enabled) {
-      fetchMusics();
+      fetchAlbums();
     }
-  }, [fetchMusics, enabled]);
+  }, [fetchAlbums, enabled]);
   /* eslint-enable react-hooks/set-state-in-effect */
 
   const handlePageChange = useCallback(
@@ -64,35 +63,35 @@ export const useMusics = (enabled = true) => {
   );
 
   const handleCreate = useCallback(
-    async (payload: Music.ICreateMusicPayload) => {
+    async (payload: Album.ICreateAlbumPayload) => {
       try {
         setMutationLoading(true);
         setMutationError(null);
-        await musicService.createMusic(payload);
-        await fetchMusics();
+        await albumService.createAlbum(payload);
+        await fetchAlbums();
       } catch (error) {
         setMutationError(getErrorMessage(error));
       } finally {
         setMutationLoading(false);
       }
     },
-    [fetchMusics],
+    [fetchAlbums],
   );
 
   const handleUpdate = useCallback(
-    async (id: string, payload: Music.IUpdateMusicPayload) => {
+    async (id: string, payload: Album.IUpdateAlbumPayload) => {
       try {
         setMutationLoading(true);
         setMutationError(null);
-        await musicService.updateMusic(id, payload);
-        await fetchMusics();
+        await albumService.updateAlbum(id, payload);
+        await fetchAlbums();
       } catch (error) {
         setMutationError(getErrorMessage(error));
       } finally {
         setMutationLoading(false);
       }
     },
-    [fetchMusics],
+    [fetchAlbums],
   );
 
   const handleDelete = useCallback(
@@ -100,19 +99,19 @@ export const useMusics = (enabled = true) => {
       try {
         setMutationLoading(true);
         setMutationError(null);
-        await musicService.deleteMusic(id);
-        await fetchMusics();
+        await albumService.deleteAlbum(id);
+        await fetchAlbums();
       } catch (error) {
         setMutationError(getErrorMessage(error));
       } finally {
         setMutationLoading(false);
       }
     },
-    [fetchMusics],
+    [fetchAlbums],
   );
 
   return {
-    data: musics,
+    data: albums,
     loading,
     error,
     mutationLoading,
@@ -121,6 +120,6 @@ export const useMusics = (enabled = true) => {
     handleCreate,
     handleUpdate,
     handleDelete,
-    fetchMusics,
+    fetchAlbums,
   };
 };

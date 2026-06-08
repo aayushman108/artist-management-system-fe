@@ -9,17 +9,14 @@
   padding: $spacing-md 0;
 
   .searchInput {
-    width: 280px;
-  }
-
-  .albumSelect {
-    width: 220px;
+    max-width: 280px;
   }
 
   .filterActions {
     display: flex;
     align-items: center;
     gap: $spacing-sm;
+    margin-left: $spacing-xs;
     align-self: flex-end;
     padding-bottom: 1px;
     flex-wrap: wrap;

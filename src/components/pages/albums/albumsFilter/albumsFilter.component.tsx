@@ -1,45 +1,35 @@
 import { useState, type ChangeEvent } from "react";
-import styles from "./musicsFilter.module.scss";
+import styles from "./albumsFilter.module.scss";
 import { HiOutlineSearch, HiOutlineRefresh } from "react-icons/hi";
 import { useQuery, useUpdateQuery } from "../../../../hooks";
-import { Button, SearchInput, Select } from "../../../../common";
+import { Button, SearchInput } from "../../../../common";
 
-export function MusicsFilters({ albums }: { albums: Album.IAlbumAll[] }) {
+export function AlbumsFilter() {
   const query = useQuery();
   const updateQuery = useUpdateQuery();
 
   const [filters, setFilters] = useState({
     search: query.search || "",
-    albumId: query.albumId || "",
   });
 
-  const isAnyValuePresent = !!filters.search || !!filters.albumId;
+  const isAnyValuePresent = !!filters.search;
 
   const handleClearFilters = () => {
-    updateQuery({ page: "1", search: null, albumId: null });
-    setFilters({ search: "", albumId: "" });
+    updateQuery({ page: "1", search: null });
+    setFilters({ search: "" });
   };
 
   const handleApplyFilters = () => {
     updateQuery({
       page: "1",
       search: filters.search || null,
-      albumId: filters.albumId || null,
     });
   };
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFilters((prev) => ({ ...prev, [name]: value }));
   };
-
-  const albumOptionsArr = [
-    { value: "", label: "All albums" },
-    { value: "none", label: "No album" },
-    ...albums.map((a) => ({ value: a.id, label: a.title })),
-  ];
 
   return (
     <form className={styles.filterGroup}>
@@ -47,21 +37,10 @@ export function MusicsFilters({ albums }: { albums: Album.IAlbumAll[] }) {
         className={styles.searchInput}
         label="Search"
         size="sm"
-        placeholder="Title, genre or language..."
+        placeholder="Search by title..."
         name="search"
         value={filters.search}
         onChange={handleChange}
-      />
-
-      <Select
-        className={styles.albumSelect}
-        label="Album"
-        name="albumId"
-        size="sm"
-        placeholder="All albums"
-        value={filters.albumId}
-        onChange={handleChange}
-        options={albumOptionsArr}
       />
 
       <div className={styles.filterActions}>

@@ -1,42 +1,39 @@
 import { useState, type ChangeEvent } from "react";
 import moment from "moment";
-import styles from "./musicModal.module.scss";
-import { Modal, Input, Select, Button } from "../../../../common";
-import { musicSchema } from "../../../../validationSchema/music.schema";
+import styles from "./albumModal.module.scss";
+import { Modal, Input, Button } from "../../../../common";
+import { albumSchema } from "../../../../validationSchema/album.schema";
 import { validateData } from "../../../../utils/validation";
 import { getErrorMessage } from "../../../../utils";
 
-interface MusicModalProps {
+interface AlbumModalProps {
   isOpen: boolean;
   onClose: () => void;
-  music?: Music.IMusic | null;
-  albums?: Album.IAlbumAll[];
+  album?: Album.IAlbum | null;
   onSubmit: (
-    payload: Music.ICreateMusicPayload | Music.IUpdateMusicPayload,
+    payload: Album.ICreateAlbumPayload | Album.IUpdateAlbumPayload,
     id?: string,
   ) => Promise<void>;
 }
 
-export function MusicModal({
+export function AlbumModal({
   isOpen,
   onClose,
-  music,
-  albums = [],
+  album,
   onSubmit,
-}: MusicModalProps) {
-  const formKey = isOpen ? music?.id || "create" : "closed";
+}: AlbumModalProps) {
+  const formKey = isOpen ? album?.id || "create" : "closed";
 
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={music ? "Edit Music" : "Add Music"}
+      title={album ? "Edit Album" : "Add Album"}
       size="md"
     >
-      <MusicForm
+      <AlbumForm
         key={formKey}
-        music={music}
-        albums={albums}
+        album={album}
         onSubmit={onSubmit}
         onClose={onClose}
       />
@@ -44,18 +41,16 @@ export function MusicModal({
   );
 }
 
-function MusicForm({
-  music,
-  albums,
+function AlbumForm({
+  album,
   onSubmit,
   onClose,
 }: {
-  music?: Music.IMusic | null;
-  albums: Album.IAlbumAll[];
-  onSubmit: MusicModalProps["onSubmit"];
+  album?: Album.IAlbum | null;
+  onSubmit: AlbumModalProps["onSubmit"];
   onClose: () => void;
 }) {
-  const isEditing = !!music;
+  const isEditing = !!album;
 
   const toDateInputValue = (date: string | null | undefined) => {
     if (!date) return "";
@@ -64,20 +59,15 @@ function MusicForm({
   };
 
   const initialValue = {
-    title: music?.title || "",
-    albumId: music?.album_id || "",
-    genre: music?.genre || "",
-    language: music?.language || "",
-    releaseDate: toDateInputValue(music?.release_date),
+    title: album?.title || "",
+    releaseDate: toDateInputValue(album?.release_date),
   };
 
   const [formData, setFormData] = useState(initialValue);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -95,8 +85,8 @@ function MusicForm({
     e.preventDefault();
 
     const schema = isEditing
-      ? musicSchema.updateMusicSchema
-      : musicSchema.createMusicSchema;
+      ? albumSchema.updateAlbumSchema
+      : albumSchema.createAlbumSchema;
 
     const validatedData = validateData(schema, formData);
     if (!validatedData.success) {
@@ -106,7 +96,7 @@ function MusicForm({
 
     setIsSubmitting(true);
     try {
-      await onSubmit(validatedData.data, music?.id);
+      await onSubmit(validatedData.data, album?.id);
       onClose();
     } catch (error) {
       setErrors({ _global: getErrorMessage(error) });
@@ -128,35 +118,7 @@ function MusicForm({
           onChange={handleChange}
           error={errors.title}
           required
-          placeholder="Enter music title"
-        />
-        <Select
-          label="Album"
-          name="albumId"
-          value={formData.albumId}
-          onChange={handleChange}
-          error={errors.albumId}
-          options={[
-            { value: "", label: "None" },
-            ...albums.map((a) => ({ value: a.id, label: a.title })),
-          ]}
-          placeholder="Select album"
-        />
-        <Input
-          label="Genre"
-          name="genre"
-          value={formData.genre}
-          onChange={handleChange}
-          error={errors.genre}
-          placeholder="Enter genre (optional)"
-        />
-        <Input
-          label="Language"
-          name="language"
-          value={formData.language}
-          onChange={handleChange}
-          error={errors.language}
-          placeholder="Enter language (optional)"
+          placeholder="Enter album title"
         />
         <Input
           label="Release Date"

@@ -4,6 +4,7 @@ declare namespace Music {
     limit?: number;
     search?: string;
     artistId?: string;
+    albumId?: string;
   }
 
   interface IMusic {
