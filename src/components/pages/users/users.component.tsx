@@ -4,7 +4,13 @@ import { UsersFilters } from "./usersFilter";
 import { UsersTable } from "./usersTable";
 
 export function UsersPage() {
-  const { users, loading } = useUsers();
+  const {
+    users,
+    loading,
+    mutationLoading,
+    handleDelete,
+    handlePageChange,
+  } = useUsers();
   const query = useQuery();
 
   const remappedUsers = useMemo(() => {
@@ -41,7 +47,9 @@ export function UsersPage() {
         pagination={pagination}
         onView={(id) => console.log("view", id)}
         onEdit={(user) => console.log("edit", user)}
-        onDelete={(id) => console.log("delete", id)}
+        onDelete={(id, type) => handleDelete(id, type)}
+        onPageChange={handlePageChange}
+        mutationLoading={mutationLoading}
       />
     </div>
   );

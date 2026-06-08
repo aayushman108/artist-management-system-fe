@@ -2,14 +2,20 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { User } from "../@types/user";
 import api from "../lib/api";
 import { useQuery } from "./useQuery.hook";
-import { AxiosError } from "axios";
+import { useUpdateQuery } from "./useUpdateQuery.hook";
+import { usersService } from "../services";
+import { getErrorMessage } from "../utils";
 
 export const useUsers = () => {
   const query = useQuery();
+  const updateQuery = useUpdateQuery();
 
   const [users, setUsers] = useState<User.IPaginatedUserResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const [mutationLoading, setMutationLoading] = useState(false);
+  const [mutationError, setMutationError] = useState<string | null>(null);
 
   const filters = useMemo(
     () => ({
@@ -29,13 +35,7 @@ export const useUsers = () => {
       const response = await api.get("/users", { params: filters });
       setUsers(response.data?.data);
     } catch (error) {
-      let errorMsg: string;
-      if (error instanceof AxiosError) {
-        errorMsg = error?.response?.data?.message;
-      } else {
-        errorMsg = "Something went wrong. Please try again.";
-      }
-      setError(errorMsg);
+      setError(getErrorMessage(error));
     } finally {
       setLoading(false);
     }
@@ -47,10 +47,37 @@ export const useUsers = () => {
   }, [fetchUsers]);
   /* eslint-enable react-hooks/set-state-in-effect */
 
+  const handleDelete = useCallback(
+    async (id: string, type?: string) => {
+      try {
+        setMutationLoading(true);
+        setMutationError(null);
+        await usersService.deleteUser(id, type);
+        fetchUsers();
+      } catch (error) {
+        setMutationError(getErrorMessage(error));
+      } finally {
+        setMutationLoading(false);
+      }
+    },
+    [fetchUsers],
+  );
+
+  const handlePageChange = useCallback(
+    (page: number) => {
+      updateQuery({ page: String(page) });
+    },
+    [updateQuery],
+  );
+
   return {
     users,
     loading,
     error,
-    refetch: fetchUsers,
+    mutationLoading,
+    mutationError,
+    handleDelete,
+    handlePageChange,
+    fetchUsers,
   };
 };

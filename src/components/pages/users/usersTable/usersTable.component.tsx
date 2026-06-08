@@ -1,12 +1,16 @@
-import { useCallback } from "react";
+import { useCallback, useMemo, useState } from "react";
 import styles from "./usersTable.module.scss";
 import { HiOutlineEye, HiOutlinePencil, HiOutlineTrash } from "react-icons/hi";
 import {
+  DeleteType,
+  UserRole,
   UserRoleMeta,
   UserStatusMeta,
   type UserRoleType,
 } from "../../../../constants/general.constant";
 import { Badge, Table, type Column } from "../../../../common";
+import { DualDeleteConfirmationModal } from "../../../../common";
+import { useMutationPermission, Module } from "../../../../hooks";
 
 interface IUser {
   id: string;
@@ -28,9 +32,27 @@ interface IUserTableProps {
   };
   onView: (id: string) => void;
   onEdit: (user: IUser) => void;
-  onDelete: (id: string) => void;
+  onDelete: (id: string, type?: string) => void;
   onPageChange?: (page: number) => void;
+  mutationLoading?: boolean;
 }
+
+const getDeleteDescriptions = (role: UserRoleType) => {
+  if (role === UserRole.ARTIST) {
+    return {
+      softDeleteDescription:
+        "Removes the artist profile and all associated albums/music permanently. The artist's user account is deactivated but preserved in the system and can be restored later.",
+      hardDeleteDescription:
+        "Permanently removes the artist, their albums, music, and user account from the system. This action cannot be undone.",
+    };
+  }
+  return {
+    softDeleteDescription:
+      "Deactivates the user account. The account is preserved as inactive and can be restored later.",
+    hardDeleteDescription:
+      "Permanently removes the user from the system. This action cannot be undone.",
+  };
+};
 
 export function UsersTable({
   users,
@@ -40,7 +62,24 @@ export function UsersTable({
   onEdit,
   onDelete,
   onPageChange,
+  mutationLoading,
 }: IUserTableProps) {
+  const canMutate = useMutationPermission(Module.USERS);
+
+  const [deleteTarget, setDeleteTarget] = useState<IUser | null>(null);
+
+  const { deleteDescriptions, hardDeleteDisabled } = useMemo(
+    () => ({
+      deleteDescriptions: deleteTarget
+        ? getDeleteDescriptions(deleteTarget.role)
+        : null,
+      hardDeleteDisabled: deleteTarget
+        ? deleteTarget.role !== UserRole.ARTIST
+        : true,
+    }),
+    [deleteTarget],
+  );
+
   const columns: Column<IUser>[] = [
     {
       header: "Name",
@@ -110,30 +149,60 @@ export function UsersTable({
           <HiOutlinePencil />
         </button>
 
-        <button
-          className={`${styles.actionBtn} ${styles.danger}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            onDelete(user.id);
-          }}
-          title="Delete"
-        >
-          <HiOutlineTrash />
-        </button>
+        {canMutate && (
+          <button
+            className={`${styles.actionBtn} ${styles.danger}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              setDeleteTarget(user);
+            }}
+            title="Delete"
+          >
+            <HiOutlineTrash />
+          </button>
+        )}
       </>
     ),
-    [onView, onEdit, onDelete],
+    [onEdit, canMutate],
   );
 
   return (
-    <Table<IUser>
-      data={users}
-      columns={columns}
-      loading={isLoading}
-      pagination={pagination}
-      onPageChange={onPageChange}
-      onRowClick={(user) => onView(user.id)}
-      actions={renderActions}
-    />
+    <>
+      <Table<IUser>
+        data={users}
+        columns={columns}
+        loading={isLoading}
+        pagination={pagination}
+        onPageChange={onPageChange}
+        onRowClick={(user) => onView(user.id)}
+        actions={renderActions}
+      />
+
+      {deleteTarget && deleteDescriptions && (
+        <DualDeleteConfirmationModal
+          isOpen
+          onClose={() => setDeleteTarget(null)}
+          title="Delete User"
+          message={
+            <span>
+              Are you sure you want to delete{" "}
+              <strong>{deleteTarget.name}</strong>?
+            </span>
+          }
+          hardDeleteDisabled={hardDeleteDisabled}
+          onSoftDelete={() => {
+            onDelete(deleteTarget.id, DeleteType.SOFT);
+            setDeleteTarget(null);
+          }}
+          onHardDelete={() => {
+            onDelete(deleteTarget.id, DeleteType.HARD);
+            setDeleteTarget(null);
+          }}
+          softDeleteDescription={deleteDescriptions.softDeleteDescription}
+          hardDeleteDescription={deleteDescriptions.hardDeleteDescription}
+          isLoading={mutationLoading}
+        />
+      )}
+    </>
   );
 }
