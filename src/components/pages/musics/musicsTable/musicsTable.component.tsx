@@ -58,7 +58,7 @@ export function MusicsTable({
           {
             header: "Artist",
             key: "artist",
-            render: (music) => <span>{music.artist}</span>,
+            render: (music: IMusicRow) => <span>{music.artist}</span>,
           },
         ]
       : []),

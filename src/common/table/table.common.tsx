@@ -78,9 +78,7 @@ export function Table<T extends { id: string | number }>({
                 >
                   {columns.map((col, idx) => (
                     <td key={idx}>
-                      {col.render
-                        ? col.render(item)
-                        : (item as unknown)[col.key]}
+                      {col.render ? col.render(item) : (item as any)[col.key]}
                     </td>
                   ))}
                   {actions && (

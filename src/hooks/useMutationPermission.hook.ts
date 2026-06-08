@@ -24,7 +24,7 @@ const mutationPermissions: Record<UserRoleType, ModuleType[]> = {
 export function useMutationPermission(module: ModuleType) {
   const { user } = useAuth();
 
-  return mutationPermissions[user.role].includes(module);
+  return mutationPermissions[user!.role].includes(module);
 }
 
 export { Module };
