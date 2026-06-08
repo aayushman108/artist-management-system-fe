@@ -11,6 +11,7 @@ import {
 import { Badge, Table, type Column } from "../../../../common";
 import { DualDeleteConfirmationModal } from "../../../../common";
 import { useMutationPermission, Module } from "../../../../hooks";
+import { useNavigate } from "react-router-dom";
 
 interface IUser {
   id: string;
@@ -65,6 +66,7 @@ export function UsersTable({
   mutationLoading,
 }: IUserTableProps) {
   const canMutate = useMutationPermission(Module.USERS);
+  const navigate = useNavigate();
 
   const [deleteTarget, setDeleteTarget] = useState<IUser | null>(null);
 
@@ -132,7 +134,16 @@ export function UsersTable({
       <>
         <button
           className={`${styles.actionBtn} ${styles.view}`}
-          onClick={() => onView(user.id)}
+          onClick={() => {
+            // onView(user.id)
+            if (user.role === UserRole.SUPER_ADMIN) {
+              console.log("show details modal");
+            } else if (user.role === UserRole.ARTIST_MANAGER) {
+              navigate(`/users/artist-managers/${user.id}`);
+            } else if (user.role === UserRole.ARTIST) {
+              navigate(`/users/artists/${user.id}`);
+            }
+          }}
           title="View"
         >
           <HiOutlineEye />
@@ -163,7 +174,7 @@ export function UsersTable({
         )}
       </>
     ),
-    [onEdit, canMutate],
+    [onEdit, navigate, canMutate],
   );
 
   return (

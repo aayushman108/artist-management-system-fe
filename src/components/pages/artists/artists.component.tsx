@@ -14,6 +14,7 @@ import styles from "./artists.module.scss";
 import { Button } from "../../../common";
 import { HiOutlineUpload, HiOutlineDownload } from "react-icons/hi";
 import { CgSpinner } from "react-icons/cg";
+import { useLocation } from "react-router-dom";
 
 export function ArtistsPage() {
   const {
@@ -46,6 +47,12 @@ export function ArtistsPage() {
 
   const { isSuperAdmin } = usePermissions();
 
+  const { pathname } = useLocation();
+  const isArtistsPage = useMemo(
+    () => pathname.startsWith("/artists"),
+    [pathname],
+  );
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingArtist, setEditingArtist] = useState<Artist.IArtist | null>(
     null,
@@ -56,12 +63,12 @@ export function ArtistsPage() {
   );
 
   useEffect(() => {
-    if (isSuperAdmin) {
+    if (isSuperAdmin && isArtistsPage) {
       artistService.getArtistManagers().then((res) => {
         setManagerOptions(res?.data || []);
       });
     }
-  }, [isSuperAdmin]);
+  }, [isSuperAdmin, isArtistsPage]);
 
   const handleModalSubmit = async (
     payload: Artist.IUpdateArtistPayload,

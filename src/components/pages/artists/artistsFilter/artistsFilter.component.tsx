@@ -8,6 +8,7 @@ import {
   Select,
   type SelectOption,
 } from "../../../../common";
+import { useLocation } from "react-router-dom";
 
 interface ArtistsFiltersProps {
   managerOptions?: Artist.IManagerOption[];
@@ -16,6 +17,10 @@ interface ArtistsFiltersProps {
 export function ArtistsFilters({ managerOptions }: ArtistsFiltersProps) {
   const query = useQuery();
   const updateQuery = useUpdateQuery();
+
+  const { pathname } = useLocation();
+
+  const isArtistsPage = pathname.startsWith("/artists");
 
   const { isSuperAdmin } = usePermissions();
 
@@ -66,7 +71,7 @@ export function ArtistsFilters({ managerOptions }: ArtistsFiltersProps) {
         onChange={handleChange}
       />
 
-      {isSuperAdmin && (
+      {isSuperAdmin && isArtistsPage && (
         <Select
           className={styles.filterSelect}
           label="Manager"

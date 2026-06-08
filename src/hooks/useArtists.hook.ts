@@ -3,10 +3,13 @@ import { useQuery } from "./useQuery.hook";
 import { artistService } from "../services/artists.service";
 import { getErrorMessage } from "../utils";
 import { useUpdateQuery } from "./useUpdateQuery.hook";
+import { useParams } from "react-router-dom";
 
 export const useArtists = (enabled = true) => {
   const query = useQuery();
   const updateQuery = useUpdateQuery();
+
+  const params = useParams();
 
   const [artists, setArtists] =
     useState<Artist.IPaginatedArtistResponse | null>(null);
@@ -30,16 +33,19 @@ export const useArtists = (enabled = true) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await artistService.getAllArtists(
-        filters as Artist.IArtistParams,
-      );
+      const response = params.managerId
+        ? await artistService.getArtistsByManagerId(
+            params.managerId,
+            filters as Artist.IArtistParams,
+          )
+        : await artistService.getAllArtists(filters as Artist.IArtistParams);
       setArtists(response?.data);
     } catch (error) {
       setError(getErrorMessage(error));
     } finally {
       setLoading(false);
     }
-  }, [filters]);
+  }, [filters, params.managerId]);
 
   /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {

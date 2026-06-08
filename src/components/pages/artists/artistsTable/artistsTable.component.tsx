@@ -1,11 +1,11 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import styles from "./artistsTable.module.scss";
 import { HiOutlineEye, HiOutlinePencil, HiOutlineTrash } from "react-icons/hi";
 import { DeleteType, UserStatusMeta } from "../../../../constants";
 import { Badge, Table, type Column } from "../../../../common";
 import { DualDeleteConfirmationModal } from "../../../../common";
 import { usePermissions } from "../../../../hooks";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 interface IArtistRow {
   id: string;
@@ -41,6 +41,14 @@ export function ArtistsTable({
 }: IArtistsTableProps) {
   const { isArtistManager } = usePermissions();
   const navigate = useNavigate();
+
+  const { pathname } = useLocation();
+  const params = useParams();
+
+  const isArtistsPage = useMemo(
+    () => pathname.startsWith("/artists"),
+    [pathname],
+  );
 
   const [deleteTarget, setDeleteTarget] = useState<IArtistRow | null>(null);
 
@@ -98,7 +106,15 @@ export function ArtistsTable({
       <>
         <button
           className={`${styles.actionBtn} ${styles.view}`}
-          onClick={() => navigate(`/artists/${artist.id}`)}
+          onClick={() => {
+            if (isArtistsPage) {
+              navigate(`/artists/${artist.id}`);
+            } else {
+              navigate(
+                `users/artist-manager/${params?.managerId}/artists/${artist.id}`,
+              );
+            }
+          }}
           title="View"
         >
           <HiOutlineEye />
@@ -127,7 +143,7 @@ export function ArtistsTable({
         </button>
       </>
     ),
-    [onEdit, navigate],
+    [onEdit, navigate, isArtistsPage, params?.managerId],
   );
 
   return (
