@@ -21,8 +21,9 @@ export const useArtists = (enabled = true) => {
       page: Number(query.page || 1),
       limit: Number(query.limit || 10),
       search: query.search || undefined,
+      managerId: query.managerId || undefined,
     }),
-    [query.page, query.limit, query.search],
+    [query.page, query.limit, query.search, query.managerId],
   );
 
   const fetchArtists = useCallback(async () => {
@@ -47,6 +48,22 @@ export const useArtists = (enabled = true) => {
     }
   }, [fetchArtists, enabled]);
   /* eslint-enable react-hooks/set-state-in-effect */
+
+  const handleUpdate = useCallback(
+    async (id: string, payload: Artist.IUpdateArtistPayload) => {
+      try {
+        setMutationLoading(true);
+        setMutationError(null);
+        await artistService.updateArtist(id, payload);
+        await fetchArtists();
+      } catch (error) {
+        setMutationError(getErrorMessage(error));
+      } finally {
+        setMutationLoading(false);
+      }
+    },
+    [fetchArtists],
+  );
 
   const handleDelete = useCallback(
     async (id: string, type?: string) => {
@@ -77,6 +94,7 @@ export const useArtists = (enabled = true) => {
     error,
     mutationLoading,
     mutationError,
+    handleUpdate,
     handleDelete,
     handlePageChange,
     fetchArtists,

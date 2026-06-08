@@ -2,26 +2,42 @@ import { z } from "zod";
 import {
   emailPreprocessor,
   optionalPreprocessor,
+  patchPreprocessor,
   requiredPreprocessor,
 } from "../utils/validationSchemaPreprocessor";
 import { validateDate } from "../utils/validation";
 import { Gender } from "../constants";
 
 const updateArtistSchema = z.object({
-  stageName: z.string().min(1).max(255).optional(),
-  dob: z
+  stageName: z
     .string()
-    .refine(validateDate, {
-      message: "Invalid date format (expected YYYY-MM-DD)",
-    })
-    .optional()
-    .nullable(),
-  gender: z
-    .enum([Gender.MALE, Gender.FEMALE, Gender.OTHER])
-    .optional()
-    .nullable(),
-  address: z.string().optional().nullable(),
-  firstReleaseYear: z.coerce.number().int().optional().nullable(),
+    .min(1, { message: "Stage name is required" })
+    .max(255, { message: "Stage name must not exceed 255 characters" })
+    .optional(),
+  dob: z.preprocess(
+    patchPreprocessor,
+    z
+      .string()
+      .refine(validateDate, {
+        message: "Invalid date format (expected YYYY-MM-DD)",
+      })
+      .optional()
+      .nullable(),
+  ),
+
+  gender: z.preprocess(
+    patchPreprocessor,
+    z.enum([Gender.MALE, Gender.FEMALE, Gender.OTHER]).optional().nullable(),
+  ),
+  address: z.preprocess(patchPreprocessor, z.string().optional().nullable()),
+  firstReleaseYear: z.preprocess(
+    patchPreprocessor,
+    z.coerce.number().int().optional().nullable(),
+  ),
+  managerId: z.preprocess(
+    patchPreprocessor,
+    z.string().uuid().optional().nullable(),
+  ),
 });
 
 const artistCsvRowSchema = z.object({

@@ -3,6 +3,7 @@ declare namespace Artist {
     page?: number;
     limit?: number;
     search?: string;
+    managerId?: string;
   }
 
   interface IArtist {
@@ -30,10 +31,16 @@ declare namespace Artist {
     gender?: string | null;
     address?: string | null;
     firstReleaseYear?: number | null;
+    managerId?: string | null;
   }
 
   interface IDeleteArtistPayload {
     type: string;
+  }
+
+  interface IManagerOption {
+    id: string;
+    name: string;
   }
 
   type IPaginatedArtistResponse = Api.PaginatedData<IArtist>;

@@ -1,35 +1,58 @@
-import { useState, type ChangeEvent } from "react";
+import { useMemo, useState, type ChangeEvent } from "react";
 import styles from "./artistsFilter.module.scss";
 import { HiOutlineSearch, HiOutlineRefresh } from "react-icons/hi";
-import { useQuery, useUpdateQuery } from "../../../../hooks";
-import { Button, SearchInput } from "../../../../common";
+import { usePermissions, useQuery, useUpdateQuery } from "../../../../hooks";
+import {
+  Button,
+  SearchInput,
+  Select,
+  type SelectOption,
+} from "../../../../common";
 
-export function ArtistsFilters() {
+interface ArtistsFiltersProps {
+  managerOptions?: Artist.IManagerOption[];
+}
+
+export function ArtistsFilters({ managerOptions }: ArtistsFiltersProps) {
   const query = useQuery();
   const updateQuery = useUpdateQuery();
 
+  const { isSuperAdmin } = usePermissions();
+
   const [filters, setFilters] = useState({
     search: query.search || "",
+    managerId: query.managerId || "",
   });
 
-  const isAnyValuePresent = !!filters.search;
+  const isAnyValuePresent = !!filters.search || !!filters.managerId;
 
   const handleClearFilters = () => {
-    updateQuery({ page: "1", search: null });
-    setFilters({ search: "" });
+    updateQuery({ page: "1", search: null, managerId: null });
+    setFilters({ search: "", managerId: "" });
   };
 
   const handleApplyFilters = () => {
     updateQuery({
       page: "1",
       search: filters.search || null,
+      managerId: filters.managerId || null,
     });
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target;
     setFilters((prev) => ({ ...prev, [name]: value }));
   };
+
+  const managerSelectOptions: SelectOption[] = useMemo(
+    () => [
+      { value: "none", label: "No Manager" },
+      ...(managerOptions?.map((m) => ({ value: m.id, label: m.name })) || []),
+    ],
+    [managerOptions],
+  );
 
   return (
     <form className={styles.filterGroup}>
@@ -42,6 +65,19 @@ export function ArtistsFilters() {
         value={filters.search}
         onChange={handleChange}
       />
+
+      {isSuperAdmin && (
+        <Select
+          className={styles.filterSelect}
+          label="Manager"
+          name="managerId"
+          options={managerSelectOptions}
+          value={filters.managerId}
+          onChange={handleChange}
+          placeholder="All Managers"
+          size="sm"
+        />
+      )}
 
       <div className={styles.filterActions}>
         <Button size="sm" type="button" onClick={handleApplyFilters}>

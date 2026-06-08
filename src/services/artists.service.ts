@@ -1,5 +1,12 @@
 import api from "../lib/api";
 
+async function getArtistManagers(): Promise<
+  Api.BaseResponse<Artist.IManagerOption[]>
+> {
+  const res = await api.get("/users/artist-managers");
+  return res.data;
+}
+
 async function getAllArtists(
   params?: Artist.IArtistParams,
 ): Promise<Api.PaginatedResponse<Artist.IArtist>> {
@@ -67,6 +74,7 @@ async function exportArtists(): Promise<Blob> {
 }
 
 export const artistService = {
+  getArtistManagers,
   getAllArtists,
   getArtistsByManagerId,
   getArtistsById,

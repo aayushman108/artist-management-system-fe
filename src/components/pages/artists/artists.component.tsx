@@ -1,7 +1,14 @@
-import { useMemo } from "react";
-import { useArtists, useImportExport, useQuery } from "../../../hooks";
+import { useEffect, useMemo, useState } from "react";
+import {
+  useArtists,
+  useImportExport,
+  usePermissions,
+  useQuery,
+} from "../../../hooks";
+import { artistService } from "../../../services";
 import { ArtistsFilters } from "./artistsFilter";
 import { ArtistsTable } from "./artistsTable";
+import { ArtistModal } from "./artistModal";
 import { ImportArtistsModal } from "./importArtistsModal";
 import styles from "./artists.module.scss";
 import { Button } from "../../../common";
@@ -13,6 +20,7 @@ export function ArtistsPage() {
     data: artists,
     loading,
     mutationLoading,
+    handleUpdate,
     handleDelete,
     handlePageChange,
     fetchArtists,
@@ -35,6 +43,34 @@ export function ArtistsPage() {
     handleJobStart,
     handleImportReset,
   } = useImportExport(fetchArtists);
+
+  const { isSuperAdmin } = usePermissions();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingArtist, setEditingArtist] = useState<Artist.IArtist | null>(
+    null,
+  );
+
+  const [managerOptions, setManagerOptions] = useState<Artist.IManagerOption[]>(
+    [],
+  );
+
+  useEffect(() => {
+    if (isSuperAdmin) {
+      artistService.getArtistManagers().then((res) => {
+        setManagerOptions(res?.data || []);
+      });
+    }
+  }, [isSuperAdmin]);
+
+  const handleModalSubmit = async (
+    payload: Artist.IUpdateArtistPayload,
+    id?: string,
+  ) => {
+    if (id) {
+      await handleUpdate(id, payload);
+    }
+  };
 
   const remappedArtists = useMemo(() => {
     return Array.isArray(artists?.data)
@@ -59,6 +95,13 @@ export function ArtistsPage() {
       pageSize: Number(query.limit) || 10,
     };
   }, [artists?.pagination, query.limit, query.page]);
+
+  const handleEdit = (artistRow: (typeof remappedArtists)[number]) => {
+    const fullArtist =
+      artists?.data?.find((a) => a.id === artistRow.id) || null;
+    setEditingArtist(fullArtist);
+    setIsModalOpen(true);
+  };
 
   return (
     <div className={styles.artistsPageContainer}>
@@ -100,7 +143,7 @@ export function ArtistsPage() {
 
       {exportError && <div className={styles.exportError}>{exportError}</div>}
 
-      <ArtistsFilters />
+      <ArtistsFilters managerOptions={managerOptions} />
       <ArtistsTable
         data={remappedArtists}
         isLoading={loading}
@@ -108,8 +151,19 @@ export function ArtistsPage() {
         pagination={pagination}
         onPageChange={handlePageChange}
         onView={(id) => console.log("view", id)}
-        onEdit={(id) => console.log("edit", id)}
+        onEdit={handleEdit}
         onDelete={handleDelete}
+      />
+
+      <ArtistModal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setEditingArtist(null);
+        }}
+        artist={editingArtist}
+        managers={managerOptions}
+        onSubmit={handleModalSubmit}
       />
 
       {canImportExport && (

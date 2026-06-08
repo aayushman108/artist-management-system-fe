@@ -12,6 +12,11 @@
     max-width: 280px;
   }
 
+  .filterSelect {
+    width: 160px;
+    flex-shrink: 0;
+  }
+
   .filterActions {
     display: flex;
     align-items: center;

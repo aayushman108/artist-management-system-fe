@@ -1,10 +1,11 @@
 import { useCallback, useState } from "react";
 import styles from "./artistsTable.module.scss";
 import { HiOutlineEye, HiOutlinePencil, HiOutlineTrash } from "react-icons/hi";
-import { DeleteType, UserRole, UserStatusMeta } from "../../../../constants";
+import { DeleteType, UserStatusMeta } from "../../../../constants";
 import { Badge, Table, type Column } from "../../../../common";
 import { DualDeleteConfirmationModal } from "../../../../common";
-import { useAuth } from "../../../../context";
+import { usePermissions } from "../../../../hooks";
+import { useNavigate } from "react-router-dom";
 
 interface IArtistRow {
   id: string;
@@ -22,7 +23,7 @@ interface IArtistsTableProps {
   isLoading?: boolean;
   pagination?: Common.IPagination;
   onView: (id: string) => void;
-  onEdit: (id: string) => void;
+  onEdit: (artist: IArtistRow) => void;
   onDelete: (id: string, type?: string) => void;
   onPageChange?: (page: number) => void;
   mutationLoading?: boolean;
@@ -38,8 +39,8 @@ export function ArtistsTable({
   onPageChange,
   mutationLoading,
 }: IArtistsTableProps) {
-  const { user } = useAuth();
-  const isArtistManager = user?.role === UserRole.ARTIST_MANAGER;
+  const { isArtistManager } = usePermissions();
+  const navigate = useNavigate();
 
   const [deleteTarget, setDeleteTarget] = useState<IArtistRow | null>(null);
 
@@ -97,7 +98,7 @@ export function ArtistsTable({
       <>
         <button
           className={`${styles.actionBtn} ${styles.view}`}
-          onClick={() => onView(artist.id)}
+          onClick={() => navigate(`/artists/${artist.id}`)}
           title="View"
         >
           <HiOutlineEye />
@@ -107,7 +108,7 @@ export function ArtistsTable({
           className={`${styles.actionBtn} ${styles.edit}`}
           onClick={(e) => {
             e.stopPropagation();
-            onEdit(artist.id);
+            onEdit(artist);
           }}
           title="Edit"
         >
@@ -126,7 +127,7 @@ export function ArtistsTable({
         </button>
       </>
     ),
-    [onView, onEdit],
+    [onEdit, navigate],
   );
 
   return (
