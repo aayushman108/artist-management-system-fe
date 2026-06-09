@@ -135,7 +135,7 @@ function MusicsSection() {
     <div className={styles.tabContent}>
       {canMutate && (
         <div className={styles.tabHeader}>
-          <Button size="sm" onClick={handleAdd}>
+          <Button onClick={handleAdd}>
             <span className={styles.btnContent}>
               <HiOutlinePlus size={16} />
               Add Music
@@ -232,7 +232,7 @@ function AlbumsSection() {
     <div className={styles.tabContent}>
       {canMutate && (
         <div className={styles.tabHeader}>
-          <Button size="sm" onClick={handleAdd}>
+          <Button onClick={handleAdd}>
             <span className={styles.btnContent}>
               <HiOutlinePlus size={16} />
               Add Album

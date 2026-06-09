@@ -58,15 +58,9 @@ function ArtistForm({
 }) {
   const isEditing = !!artist;
 
-  const toDateInputValue = (date: string | null | undefined) => {
-    if (!date) return "";
-    const m = moment(date);
-    return m.isValid() ? m.format("YYYY-MM-DD") : date;
-  };
-
   const initialValue = {
     stageName: artist?.stage_name || "",
-    dob: toDateInputValue(artist?.dob),
+    dob: artist?.dob ? moment(artist?.dob).format("YYYY-MM-DD") : "",
     gender: artist?.gender || "",
     address: artist?.address || "",
     firstReleaseYear: artist?.first_release_year?.toString() || "",
