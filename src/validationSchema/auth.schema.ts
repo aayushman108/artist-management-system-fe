@@ -76,9 +76,38 @@ const acceptInviteSchema = z
     path: ["confirmPassword"],
   });
 
+const forgotPasswordSchema = z.object({
+  email: z
+    .string({ message: "Email is required" })
+    .email({ message: "Invalid email format" }),
+});
+
+const resetPasswordSchema = z
+  .object({
+    password: z
+      .string({ message: "Password is required" })
+      .min(8, { message: "Password must be at least 8 characters" })
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
+        {
+          message:
+            "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&#)",
+        },
+      ),
+    confirmPassword: z
+      .string({ message: "Please confirm your password" })
+      .min(1, { message: "Please confirm your password" }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
 export const authSchema = {
   loginSchema,
   signupSchema,
   signupFormSchema,
   acceptInviteSchema,
+  forgotPasswordSchema,
+  resetPasswordSchema,
 };

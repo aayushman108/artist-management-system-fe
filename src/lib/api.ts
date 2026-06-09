@@ -85,13 +85,24 @@ api.interceptors.response.use(
     };
 
     const status = error.response?.status;
-    const isRefreshRequest = originalRequest?.url?.includes("/auth/refresh");
+    const publicRoutes = [
+      "/auth/login",
+      "/auth/signup",
+      "/auth/refresh",
+      "/auth/verify-email",
+      "/auth/forgot-password",
+      "/auth/reset-password",
+      "/users/verify-invite"
+    ];
+    const isPublicRoute = publicRoutes.some((route) =>
+      originalRequest?.url?.includes(route)
+    );
 
     if (
       status === 401 &&
       originalRequest &&
       !originalRequest._retry &&
-      !isRefreshRequest
+      !isPublicRoute
     ) {
       originalRequest._retry = true;
 

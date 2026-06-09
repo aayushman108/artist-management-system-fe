@@ -3,9 +3,11 @@ import {
   AcceptInvite,
   ArtistsPage,
   DashboardLayout,
+  ForgotPassword,
   InvitationsPage,
   Login,
   MusicsPage,
+  ResetPassword,
   Signup,
   UsersPage,
 } from "../components";
@@ -23,6 +25,14 @@ export const Routes: RouteObject[] = [
       {
         path: "signup",
         element: <Signup />,
+      },
+      {
+        path: "forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "reset-password",
+        element: <ResetPassword />,
       },
       {
         path: "accept-invite",

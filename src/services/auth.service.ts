@@ -75,6 +75,23 @@ async function verifyInvite(
   return res.data;
 }
 
+// FORGOT PASSWORD
+async function forgotPassword(payload: {
+  email: string;
+}): Promise<Api.BaseResponse<{ message: string }>> {
+  const res = await api.post("/auth/forgot-password", payload);
+  return res.data;
+}
+
+// RESET PASSWORD
+async function resetPassword(payload: {
+  token: string;
+  password: string;
+}): Promise<Api.BaseResponse<{ message: string }>> {
+  const res = await api.post("/auth/reset-password", payload);
+  return res.data;
+}
+
 export const authService = {
   signup,
   verifyEmail,
@@ -84,4 +101,6 @@ export const authService = {
   logout,
   checkSignupEligibility,
   verifyInvite,
+  forgotPassword,
+  resetPassword,
 };
