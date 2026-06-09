@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useQuery, useUsers } from "../../../hooks";
 import { UsersFilters } from "./usersFilter";
-import { UsersTable } from "./usersTable";
+import { UsersTable, type IUser } from "./usersTable";
 import { UserEditModal } from "./userEditModal";
 import { UserViewModal } from "./userViewModal";
 import { UserRole } from "../../../constants";
@@ -27,7 +27,7 @@ export function UsersPage() {
 
   const [viewUser, setViewUser] = useState<User.IExtendedUser | null>(null);
 
-  const remappedUsers = useMemo(() => {
+  const remappedUsers: IUser[] = useMemo(() => {
     return Array.isArray(users?.data)
       ? users?.data?.map((user) => {
           return {
@@ -37,7 +37,7 @@ export function UsersPage() {
             email: user?.user?.email,
             role: user?.user?.role,
             status: user?.user?.status,
-            created_by: user?.user?.creator_name,
+            created_by: user?.user?.creator_name || "N/A",
           };
         })
       : [];
@@ -52,7 +52,7 @@ export function UsersPage() {
     };
   }, [users?.pagination, query.limit, query.page]);
 
-  const handleEdit = (userRow: (typeof remappedUsers)[number]) => {
+  const handleEdit = (userRow: IUser) => {
     const fullUser = users?.data?.find((u) => u.user.id === userRow.id) || null;
     setEditingUser(fullUser);
     setIsEditModalOpen(true);
@@ -64,7 +64,7 @@ export function UsersPage() {
     setEditingUser(null);
   };
 
-  const handleView = (userRow: (typeof remappedUsers)[number]) => {
+  const handleView = (userRow: IUser) => {
     if (userRow.role === UserRole.SUPER_ADMIN) {
       const fullUser =
         users?.data?.find((u) => u.user.id === userRow.id) || null;
