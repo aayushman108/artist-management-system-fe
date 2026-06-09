@@ -7,6 +7,7 @@ import {
   InvitationsPage,
   Login,
   MusicsPage,
+  ProfilePage,
   ResetPassword,
   Signup,
   UsersPage,
@@ -50,6 +51,10 @@ export const Routes: RouteObject[] = [
           {
             index: true,
             element: <div>Home</div>,
+          },
+          {
+            path: "profile",
+            element: <ProfilePage />,
           },
           {
             path: "users",

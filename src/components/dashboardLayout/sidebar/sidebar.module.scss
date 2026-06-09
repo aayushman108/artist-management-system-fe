@@ -162,6 +162,13 @@
       overflow: hidden;
       white-space: nowrap;
       transition: all 0.2s ease;
+      text-decoration: none;
+      border-radius: $border-radius-md;
+      padding: $spacing-xs $spacing-sm;
+
+      &:hover {
+        background: rgba($color-primary, 0.05);
+      }
       .avatar {
         position: relative;
         width: 36px;
@@ -235,7 +242,7 @@
     .userCard {
       background: transparent;
       border-color: transparent;
-      padding: $spacing-sm 0;
+      padding: $spacing-xs 0;
       justify-content: center;
 
       .avatar {

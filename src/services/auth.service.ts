@@ -47,7 +47,7 @@ async function refreshToken(): Promise<Api.BaseResponse<User.ILoginResponse>> {
 }
 
 // GET MY DETAILS
-async function getMyDetails(): Promise<Api.BaseResponse<User.IUser>> {
+async function getMyDetails(): Promise<Api.BaseResponse<User.IAuthMyData>> {
   const res = await api.get("/auth/me");
   return res.data;
 }

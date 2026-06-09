@@ -4,10 +4,13 @@ import type { User } from "../../@types/user";
 
 export interface AuthContextType {
   user: User.IUser | null;
+  profile: User.IUserProfile | null;
+  artist: User.IArtist | null;
   isAuthenticated: boolean;
   isAuthLoading: boolean;
   login: (payload: ILoginPayload) => Promise<void>;
   logout: () => Promise<void>;
+  refreshMyDetails: () => Promise<void>;
   error: string | null;
   clearError: () => void;
 }

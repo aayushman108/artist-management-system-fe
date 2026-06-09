@@ -1,4 +1,4 @@
-import { FiHome, FiUsers, FiUser, FiMusic } from "react-icons/fi";
+import { FiHome, FiUsers, FiUser, FiMusic, FiSettings } from "react-icons/fi";
 import { HiOutlinePaperAirplane } from "react-icons/hi2";
 
 export const UserRole = {
@@ -26,6 +26,7 @@ export const DASHBOARD_NAV_ITEMS = {
       icon: HiOutlinePaperAirplane,
     },
     { href: "/artists", label: "Artists", icon: FiUser },
+    { href: "/profile", label: "Profile", icon: FiSettings },
   ],
 
   [UserRole.ARTIST_MANAGER]: [
@@ -36,11 +37,13 @@ export const DASHBOARD_NAV_ITEMS = {
       icon: HiOutlinePaperAirplane,
     },
     { href: "/artists", label: "Artists", icon: FiUser },
+    { href: "/profile", label: "Profile", icon: FiSettings },
   ],
 
   [UserRole.ARTIST]: [
     { href: "/", label: "Home", icon: FiHome },
     { href: "/musics", label: "Musics", icon: FiMusic },
+    { href: "/profile", label: "Profile", icon: FiSettings },
   ],
 };
 

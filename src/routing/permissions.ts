@@ -3,15 +3,16 @@ import { UserRole, type UserRoleType } from "../constants/general.constant";
 export const ROLE_PERMISSIONS: Record<UserRoleType, string[]> = {
   [UserRole.SUPER_ADMIN]: [
     "/",
+    "/profile",
     "/users",
     "/artist-managers",
     "/artists",
     "/invitations",
   ],
 
-  [UserRole.ARTIST_MANAGER]: ["/", "/artists", "/invitations"],
+  [UserRole.ARTIST_MANAGER]: ["/", "/profile", "/artists", "/invitations"],
 
-  [UserRole.ARTIST]: ["/", "/musics"],
+  [UserRole.ARTIST]: ["/", "/profile", "/musics"],
 };
 
 export function hasRoutePermission(

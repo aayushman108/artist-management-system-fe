@@ -73,6 +73,21 @@ async function exportArtists(): Promise<Blob> {
   return res.data;
 }
 
+async function updateMyArtistProfile(
+  payload: Artist.IUpdateMyArtistProfilePayload,
+): Promise<Api.BaseResponse<Artist.IMyArtistProfileResponse>> {
+  const res = await api.patch("/artists/profile/me", payload);
+  return res.data;
+}
+
+async function updateArtistProfile(
+  id: string,
+  payload: Artist.IUpdateMyArtistProfilePayload,
+): Promise<Api.BaseResponse<null>> {
+  const res = await api.patch(`/artists/${id}/profile`, payload);
+  return res.data;
+}
+
 export const artistService = {
   getArtistManagers,
   getAllArtists,
@@ -83,4 +98,6 @@ export const artistService = {
   importArtists,
   exportArtists,
   getJobStatus,
+  updateMyArtistProfile,
+  updateArtistProfile,
 };

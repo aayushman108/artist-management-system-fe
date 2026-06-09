@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import type { User } from "../@types/user";
 import api from "../lib/api";
 import { useQuery } from "./useQuery.hook";
 import { useUpdateQuery } from "./useUpdateQuery.hook";
 import { usersService } from "../services";
 import { getErrorMessage } from "../utils";
+import type { User } from "../@types/user";
 
 export const useUsers = () => {
   const query = useQuery();

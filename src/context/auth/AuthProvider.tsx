@@ -1,14 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { AuthContext } from "./authContext";
 import { authService, type ILoginPayload } from "../../services/auth.service";
 import type { User } from "../../@types/user";
-import { AxiosError } from "axios";
+import { getErrorMessage } from "../../utils";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User.IUser | null>(null);
+  const [profile, setProfile] = useState<User.IUserProfile | null>(null);
+  const [artist, setArtist] = useState<User.IArtist | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAuthLoading, setIsAuthLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const setAuthData = useCallback((data: User.IAuthMyData) => {
+    setUser(data.user);
+    setProfile(data.profile);
+    setArtist(data.artist);
+  }, []);
+
+  const clearAuthData = useCallback(() => {
+    setUser(null);
+    setProfile(null);
+    setArtist(null);
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -18,14 +32,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         const res = await authService.getMyDetails();
         setIsAuthenticated(true);
-        setUser(res.data);
+        setAuthData(res.data);
       } catch (error) {
         console.log(error);
       } finally {
         setIsAuthLoading(false);
       }
     })();
-  }, []);
+  }, [setAuthData]);
 
   const handleLogin = async (payload: ILoginPayload) => {
     try {
@@ -34,9 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(res.data.user);
       localStorage.setItem("accessToken", res.data.accessToken);
     } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        setError(error.response?.data.message || "Login failed");
-      }
+      setError(getErrorMessage(error));
     }
   };
 
@@ -44,14 +56,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       await authService.logout();
       setIsAuthenticated(false);
-      setUser(null);
+      clearAuthData();
       localStorage.removeItem("accessToken");
     } catch (error) {
-      if (error instanceof AxiosError) {
-        setError(error.response?.data.message || "Logout failed");
-      }
+      setError(getErrorMessage(error));
     }
   };
+
+  const refreshMyDetails = useCallback(async () => {
+    try {
+      const res = await authService.getMyDetails();
+      setAuthData(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [setAuthData]);
 
   const clearError = () => setError(null);
 
@@ -59,10 +78,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     <AuthContext.Provider
       value={{
         user,
+        profile,
+        artist,
         isAuthenticated,
         isAuthLoading,
         login: handleLogin,
         logout: handleLogout,
+        refreshMyDetails,
         error,
         clearError,
       }}

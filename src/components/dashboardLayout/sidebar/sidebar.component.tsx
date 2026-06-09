@@ -88,7 +88,7 @@ export function Sidebar({
         </nav>
 
         <div className={styles.userSection}>
-          <div className={styles.userCard}>
+          <Link to="/profile" className={styles.userCard}>
             <div className={styles.avatar}>
               {getInitials([user?.first_name, user?.last_name].join(" "))}
             </div>
@@ -96,7 +96,7 @@ export function Sidebar({
               <div className={styles.userName}>{user?.first_name}</div>
               <div className={styles.userEmail}>{user?.email}</div>
             </div>
-          </div>
+          </Link>
         </div>
       </aside>
       <ConfirmationModal

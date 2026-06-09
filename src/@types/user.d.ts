@@ -1,4 +1,4 @@
-import type { UserRoleType } from "../constants/general.constant";
+import type { UserRoleType } from "../constants";
 
 declare namespace User {
   interface IUser {
@@ -30,9 +30,13 @@ declare namespace User {
   }
 
   interface IArtist {
+    dob: string | null;
+    gender: string | null;
+    address: string | null;
     stage_name: string | null;
     manager_id: string | null;
     artist_manager_name: string | null;
+    first_release_year: number | null;
   }
 
   interface IExtendedUser {
@@ -45,5 +49,32 @@ declare namespace User {
 
   interface ISignupEligibilityResponse {
     isSignupAllowed: boolean;
+  }
+
+  interface IAuthMyData {
+    user: IUser;
+    profile: IUserProfile | null;
+    artist: IArtist | null;
+  }
+
+  interface IUpdateProfilePayload {
+    phone?: string | null;
+    dob?: string | null;
+    gender?: string | null;
+    address?: string | null;
+    firstName?: string;
+    lastName?: string | null;
+  }
+
+  interface IUserProfileResponse {
+    id: string;
+    user_id: string;
+    phone: string | null;
+    avatar: { public_id: string; url: string } | null;
+    dob: string | null;
+    gender: string | null;
+    address: string | null;
+    created_at: string;
+    updated_at: string;
   }
 }
