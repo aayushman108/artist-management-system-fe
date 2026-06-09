@@ -20,7 +20,7 @@
   .logo {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: $spacing-sm;
     border-bottom: 1px solid color.mix($color-primary, $color-border, 18%);
     height: $header-height;

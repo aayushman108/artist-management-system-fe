@@ -41,7 +41,6 @@ export function Sidebar({
               }
             }}
           >
-            <img src="/logo.png" alt="Logo" className={styles.logoIcon} />
             <span>Artist Management System</span>
           </Link>
           <button
