@@ -6,7 +6,6 @@ interface PaginationProps {
   totalPages: number;
   onPageChange: (page: number) => void;
   totalResults?: number;
-  pageSize?: number;
 }
 
 export function Pagination({
@@ -14,7 +13,6 @@ export function Pagination({
   totalPages,
   onPageChange,
   totalResults,
-  pageSize = 10,
 }: PaginationProps) {
   if (totalPages <= 1 && !totalResults) return null;
 
@@ -54,15 +52,9 @@ export function Pagination({
     return pages;
   };
 
-  const startResult = (currentPage - 1) * pageSize + 1;
-  const endResult = Math.min(currentPage * pageSize, totalResults || 0);
-
   return (
     <div className={styles.container}>
-      <div className={styles.info}>
-        Showing <span>{startResult}</span> to <span>{endResult}</span> of{" "}
-        <span>{totalResults}</span> results
-      </div>
+      <div className={styles.info}></div>
 
       <div className={styles.controls}>
         <button

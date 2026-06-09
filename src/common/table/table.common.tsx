@@ -110,7 +110,6 @@ export function Table<T extends { id: string | number }>({
             totalPages={pagination.totalPages}
             onPageChange={onPageChange}
             totalResults={pagination.totalResults}
-            pageSize={pagination.pageSize}
           />
         )}
       </div>

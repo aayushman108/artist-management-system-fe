@@ -32,6 +32,7 @@ export function UsersPage() {
       ? users?.data?.map((user) => {
           return {
             id: user?.user?.id,
+            artistId: user?.artist?.id,
             name: `${user?.user?.first_name} ${user?.user?.last_name}`,
             email: user?.user?.email,
             role: user?.user?.role,
@@ -71,7 +72,7 @@ export function UsersPage() {
     } else if (userRow.role === UserRole.ARTIST_MANAGER) {
       navigate(`/users/artist-managers/${userRow.id}`);
     } else if (userRow.role === UserRole.ARTIST) {
-      navigate(`/users/artists/${userRow.id}`);
+      navigate(`/users/artists/${userRow.artistId}?userId=${userRow.id}`);
     }
   };
 

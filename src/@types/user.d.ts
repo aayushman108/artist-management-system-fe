@@ -30,6 +30,7 @@ declare namespace User {
   }
 
   interface IArtist {
+    id: string;
     dob: string | null;
     gender: string | null;
     address: string | null;

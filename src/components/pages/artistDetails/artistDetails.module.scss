@@ -1,0 +1,11 @@
+@use "../../../styles/variables" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.musicsSection {
+  margin-top: $spacing-md;
+}

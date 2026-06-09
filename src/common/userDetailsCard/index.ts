@@ -1,0 +1,1 @@
+export * from "./userDetailsCard.common";

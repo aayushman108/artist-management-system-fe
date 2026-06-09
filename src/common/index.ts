@@ -8,3 +8,4 @@ export * from "./select";
 export * from "./badge";
 export * from "./searchInput";
 export * from "./spinner";
+export * from "./userDetailsCard";

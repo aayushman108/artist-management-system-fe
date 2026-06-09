@@ -1,0 +1,70 @@
+@use "../../styles/variables" as *;
+
+.userCard {
+  padding: $spacing-xl;
+  background: $color-bg;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-lg;
+
+  .userCardTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-xl;
+    padding-bottom: $spacing-lg;
+    border-bottom: 1px solid $color-border;
+    margin-bottom: $spacing-lg;
+
+    .basicInfo {
+      .name {
+        margin: 0 0 4px;
+        font-size: 1.5rem;
+        color: $color-primary;
+      }
+
+      .email {
+        margin: 0;
+        color: $color-text;
+        font-size: 0.875rem;
+      }
+    }
+
+    .badges {
+      display: flex;
+      gap: $spacing-sm;
+    }
+  }
+
+  .sectionTitle {
+    margin: $spacing-xl 0 $spacing-md;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+  }
+
+  .detailGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: $spacing-xl $spacing-md;
+
+    .detailCard {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .detailLabel {
+        font-size: $font-size-xxs;
+        font-weight: 500;
+        color: $color-text;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .detailValue {
+        font-size: $font-size-sm;
+        font-weight: 500;
+        color: $color-text-dark;
+      }
+    }
+  }
+}

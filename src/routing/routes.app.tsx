@@ -1,6 +1,8 @@
 import { type RouteObject, Navigate } from "react-router-dom";
 import {
   AcceptInvite,
+  ArtistManagerDetailsPage,
+  ArtistDetailsPage,
   ArtistsPage,
   DashboardLayout,
   ForgotPassword,
@@ -62,40 +64,15 @@ export const Routes: RouteObject[] = [
           },
           {
             path: "users/artist-managers/:managerId",
-            element: (
-              <div>
-                <p>
-                  USERS --- Artist Manager's Details section wherein artist
-                  manager details with user detailsand profile details will be
-                  seen here.
-                </p>
-                <ArtistsPage />
-              </div>
-            ),
+            element: <ArtistManagerDetailsPage />,
           },
           {
             path: "users/artist-manager/:managerId/artists/:artistId",
-            element: (
-              <div>
-                <p>
-                  USERS --- Artist's Details section wherein artist details with
-                  user details will be seen here.
-                </p>
-                <MusicsPage />
-              </div>
-            ),
+            element: <ArtistDetailsPage />,
           },
           {
             path: "users/artists/:artistId",
-            element: (
-              <div>
-                <p>
-                  USERS --- Artist's Details section wherein artist details with
-                  user details will be seen here.
-                </p>
-                <MusicsPage />
-              </div>
-            ),
+            element: <ArtistDetailsPage />,
           },
 
           {
@@ -104,15 +81,7 @@ export const Routes: RouteObject[] = [
           },
           {
             path: "artists/:artistId",
-            element: (
-              <div>
-                <p>
-                  ARTISTS --- Artist's Details section wherein artist details
-                  with user details will be seen here.
-                </p>
-                <MusicsPage />
-              </div>
-            ),
+            element: <ArtistDetailsPage />,
           },
           {
             path: "invitations",

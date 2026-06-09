@@ -109,10 +109,10 @@ export function ArtistsTable({
           className={`${styles.actionBtn} ${styles.view}`}
           onClick={() => {
             if (isArtistsPage) {
-              navigate(`/artists/${artist.id}`);
+              navigate(`/artists/${artist.id}?userId=${artist.userId}`);
             } else {
               navigate(
-                `/users/artist-manager/${params?.managerId}/artists/${artist.userId}`,
+                `/users/artist-manager/${params?.managerId}/artists/${artist.id}?userId=${artist.userId}`,
               );
             }
           }}
