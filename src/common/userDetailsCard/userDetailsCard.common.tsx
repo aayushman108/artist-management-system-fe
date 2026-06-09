@@ -132,13 +132,14 @@ export function UserDetailsCard({ artistId, managerId }: UserDetailsCardProps) {
     }
 
     return currentSections;
-  }, [primaryUser, managerData]);
+  }, [primaryUser, managerData, isManagerDetailsPage]);
 
   if (loading || !primaryUser) return null;
 
   const fullName = `${primaryUser.user.first_name} ${primaryUser.user.last_name}`;
   const roleLabel = UserRoleMeta[primaryUser.user.role]?.label || "";
-  const statusMeta = UserStatusMeta[primaryUser.user.status];
+  const statusMeta =
+    UserStatusMeta[primaryUser.user.status as keyof typeof UserStatusMeta];
 
   return (
     <div className={styles.userCard}>

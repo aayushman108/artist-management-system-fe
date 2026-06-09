@@ -12,8 +12,9 @@ import { Badge, Table, type Column } from "../../../../common";
 import { DualDeleteConfirmationModal } from "../../../../common";
 import { useMutationPermission, Module } from "../../../../hooks";
 
-interface IUser {
+export interface IUser {
   id: string;
+  artistId?: string;
   name: string;
   email: string;
   role: UserRoleType;
