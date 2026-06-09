@@ -11,7 +11,6 @@ import {
 import { Badge, Table, type Column } from "../../../../common";
 import { DualDeleteConfirmationModal } from "../../../../common";
 import { useMutationPermission, Module } from "../../../../hooks";
-import { useNavigate } from "react-router-dom";
 
 interface IUser {
   id: string;
@@ -31,7 +30,7 @@ interface IUserTableProps {
     totalResults: number;
     pageSize: number;
   };
-  onView: (id: string) => void;
+  onView: (user: IUser) => void;
   onEdit: (user: IUser) => void;
   onDelete: (id: string, type?: string) => void;
   onPageChange?: (page: number) => void;
@@ -66,7 +65,6 @@ export function UsersTable({
   mutationLoading,
 }: IUserTableProps) {
   const canMutate = useMutationPermission(Module.USERS);
-  const navigate = useNavigate();
 
   const [deleteTarget, setDeleteTarget] = useState<IUser | null>(null);
 
@@ -134,31 +132,24 @@ export function UsersTable({
       <>
         <button
           className={`${styles.actionBtn} ${styles.view}`}
-          onClick={() => {
-            // onView(user.id)
-            if (user.role === UserRole.SUPER_ADMIN) {
-              console.log("show details modal");
-            } else if (user.role === UserRole.ARTIST_MANAGER) {
-              navigate(`/users/artist-managers/${user.id}`);
-            } else if (user.role === UserRole.ARTIST) {
-              navigate(`/users/artists/${user.id}`);
-            }
-          }}
+          onClick={() => onView(user)}
           title="View"
         >
           <HiOutlineEye />
         </button>
 
-        <button
-          className={`${styles.actionBtn} ${styles.edit}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            onEdit(user);
-          }}
-          title="Update"
-        >
-          <HiOutlinePencil />
-        </button>
+        {user.role !== UserRole.SUPER_ADMIN && (
+          <button
+            className={`${styles.actionBtn} ${styles.edit}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit(user);
+            }}
+            title="Update"
+          >
+            <HiOutlinePencil />
+          </button>
+        )}
 
         {canMutate && (
           <button
@@ -174,7 +165,7 @@ export function UsersTable({
         )}
       </>
     ),
-    [onEdit, navigate, canMutate],
+    [onEdit, onView, canMutate],
   );
 
   return (
@@ -185,7 +176,7 @@ export function UsersTable({
         loading={isLoading}
         pagination={pagination}
         onPageChange={onPageChange}
-        onRowClick={(user) => onView(user.id)}
+        onRowClick={(user) => onView(user)}
         actions={renderActions}
       />
 

@@ -83,6 +83,7 @@ export function ArtistsPage() {
     return Array.isArray(artists?.data)
       ? artists?.data?.map((artist) => ({
           id: artist.id,
+          userId: artist.user_id,
           name: artist.name,
           email: artist.email,
           stageName: artist.stage_name,

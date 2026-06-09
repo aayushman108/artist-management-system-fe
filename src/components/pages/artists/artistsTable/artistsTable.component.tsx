@@ -9,6 +9,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 interface IArtistRow {
   id: string;
+  userId: string;
   name: string;
   email: string;
   stageName: string | null;
@@ -111,7 +112,7 @@ export function ArtistsTable({
               navigate(`/artists/${artist.id}`);
             } else {
               navigate(
-                `users/artist-manager/${params?.managerId}/artists/${artist.id}`,
+                `/users/artist-manager/${params?.managerId}/artists/${artist.userId}`,
               );
             }
           }}
