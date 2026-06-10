@@ -48,7 +48,7 @@ const onRefreshFailed = (error: unknown) => {
 /** Pre-configured Axios instance */
 const api = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 15000,
+  timeout: 30000,
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
@@ -92,10 +92,10 @@ api.interceptors.response.use(
       "/auth/verify-email",
       "/auth/forgot-password",
       "/auth/reset-password",
-      "/users/verify-invite"
+      "/users/verify-invite",
     ];
     const isPublicRoute = publicRoutes.some((route) =>
-      originalRequest?.url?.includes(route)
+      originalRequest?.url?.includes(route),
     );
 
     if (

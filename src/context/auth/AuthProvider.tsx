@@ -47,6 +47,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsAuthenticated(true);
       setUser(res.data.user);
       localStorage.setItem("accessToken", res.data.accessToken);
+
+      const detailsRes = await authService.getMyDetails();
+      setProfile(detailsRes.data.profile);
+      setArtist(detailsRes.data.artist);
     } catch (error: unknown) {
       setError(getErrorMessage(error));
     }

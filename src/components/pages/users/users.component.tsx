@@ -7,6 +7,7 @@ import { UserViewModal } from "./userViewModal";
 import { UserRole } from "../../../constants";
 import { useNavigate } from "react-router-dom";
 import type { User } from "../../../@types/user";
+import styles from "./users.module.scss";
 
 export function UsersPage() {
   const {
@@ -78,7 +79,9 @@ export function UsersPage() {
 
   return (
     <div>
-      <h3>Users List</h3>
+      <div className={styles.headerRow}>
+        <h3>Users List</h3>
+      </div>
       <UsersFilters />
       <UsersTable
         users={remappedUsers}

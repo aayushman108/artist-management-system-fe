@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { Gender } from "../constants";
 import { patchPreprocessor } from "../utils/validationSchemaPreprocessor";
-import { validateDate } from "../utils/validation";
+import { validatePastDate } from "../utils/validation";
 
 const userProfileUpdateSchema = z.object({
   phone: z.preprocess(
@@ -16,8 +16,8 @@ const userProfileUpdateSchema = z.object({
     patchPreprocessor,
     z
       .string()
-      .refine(validateDate, {
-        message: "Invalid date format (expected YYYY-MM-DD)",
+      .refine(validatePastDate, {
+        message: "Date of birth cannot be in future",
       })
       .optional()
       .nullable(),
@@ -52,8 +52,8 @@ const artistProfileUpdateSchema = z.object({
     patchPreprocessor,
     z
       .string()
-      .refine(validateDate, {
-        message: "Invalid date format (expected YYYY-MM-DD)",
+      .refine(validatePastDate, {
+        message: "Date of birth cannot be in future",
       })
       .optional()
       .nullable(),
