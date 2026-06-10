@@ -100,7 +100,9 @@ export function ArtistsTable({
           {
             header: "Manager",
             key: "managerName",
-            render: (artist) => <span>{artist?.managerName || "N/A"}</span>,
+            render: (artist: IArtistRow) => (
+              <span>{artist?.managerName || "N/A"}</span>
+            ),
           },
         ]
       : []),
