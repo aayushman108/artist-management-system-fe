@@ -69,11 +69,6 @@ export function AcceptInvite() {
     <div className={styles.container}>
       <div className={styles.card}>
         <div className={styles.header}>
-          <img
-            src="/logo.png"
-            alt="Artist Management System"
-            className={styles.logo}
-          />
           <h1>Accept invitation to</h1>
           <p className={styles.projectName}>Artist Management System</p>
         </div>

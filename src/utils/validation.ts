@@ -1,3 +1,4 @@
+import moment from "moment";
 import { type ZodSchema, ZodError } from "zod";
 
 export type ValidationResult<T> =
@@ -11,6 +12,11 @@ export const validateDate = (val: string) => {
   return !isNaN(date.getTime());
 };
 
+export const validatePastDate = (val: string) => {
+  if (!validateDate(val)) return false;
+  return moment(val).isBefore(moment(), "day");
+};
+
 export const validateData = <T>(
   schema: ZodSchema<T>,
   data: unknown,
@@ -21,10 +27,10 @@ export const validateData = <T>(
   } catch (error) {
     if (error instanceof ZodError) {
       const errors: Record<string, string> = {};
-      
+
       error.issues.forEach((issue) => {
         const field = issue.path.join(".") || "_global";
-        
+
         // Only grab the first error for a given field
         if (!errors[field]) {
           errors[field] = issue.message;
@@ -37,8 +43,11 @@ export const validateData = <T>(
 
       return { success: false, errors };
     }
-    
+
     // Unexpected error fallback
-    return { success: false, errors: { _global: "Unexpected validation error" } };
+    return {
+      success: false,
+      errors: { _global: "Unexpected validation error" },
+    };
   }
 };

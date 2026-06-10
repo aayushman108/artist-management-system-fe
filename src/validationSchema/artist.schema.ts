@@ -5,7 +5,7 @@ import {
   patchPreprocessor,
   requiredPreprocessor,
 } from "../utils/validationSchemaPreprocessor";
-import { validateDate } from "../utils/validation";
+import { validatePastDate } from "../utils/validation";
 import { Gender } from "../constants";
 
 const updateArtistSchema = z.object({
@@ -18,8 +18,8 @@ const updateArtistSchema = z.object({
     patchPreprocessor,
     z
       .string()
-      .refine(validateDate, {
-        message: "Invalid date format (expected YYYY-MM-DD)",
+      .refine(validatePastDate, {
+        message: "Date of birth cannot be in future",
       })
       .optional()
       .nullable(),
@@ -74,7 +74,7 @@ const artistCsvRowSchema = z.object({
     optionalPreprocessor,
     z
       .string()
-      .refine(validateDate, {
+      .refine(validatePastDate, {
         message: "Invalid date format (expected YYYY-MM-DD)",
       })
       .optional()

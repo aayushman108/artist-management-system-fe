@@ -75,11 +75,6 @@ export function ResetPassword() {
     <div className={styles.container}>
       <div className={styles.card}>
         <div className={styles.header}>
-          <img
-            src="/logo.png"
-            alt="Artist Management System"
-            className={styles.logo}
-          />
           <h1>Reset Password</h1>
           <p>Enter your new password</p>
         </div>

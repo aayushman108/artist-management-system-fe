@@ -6,9 +6,11 @@ import {
   ArtistsPage,
   DashboardLayout,
   ForgotPassword,
+  HomePage,
   InvitationsPage,
   Login,
   MusicsPage,
+  NotFoundPage,
   ProfilePage,
   ResetPassword,
   Signup,
@@ -52,7 +54,7 @@ export const Routes: RouteObject[] = [
         children: [
           {
             index: true,
-            element: <div>Home</div>,
+            element: <HomePage />,
           },
           {
             path: "profile",
@@ -95,6 +97,10 @@ export const Routes: RouteObject[] = [
         ],
       },
     ],
+  },
+  {
+    path: "not-found",
+    element: <NotFoundPage />,
   },
   {
     path: "*",

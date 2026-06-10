@@ -21,13 +21,6 @@
       align-items: center;
       gap: 10px;
       flex: 1;
-
-      &::after {
-        content: "";
-        height: 1px;
-        background: $gradient-primary;
-        flex: 1;
-      }
     }
 
     .headerActions {
@@ -35,14 +28,6 @@
       align-items: center;
       gap: $spacing-sm;
       flex-shrink: 0;
-
-      button {
-        padding-left: $spacing-2sm !important;
-        padding-right: $spacing-2sm !important;
-        height: 32px !important;
-        font-size: $font-size-xs !important;
-        border-radius: $border-radius-md !important;
-      }
     }
   }
 

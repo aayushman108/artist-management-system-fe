@@ -1,12 +1,12 @@
 import { useState, type ChangeEvent } from "react";
+import moment from "moment";
 import { profileSchema } from "../../../../validationSchema/profile.schema";
 import { validateData } from "../../../../utils/validation";
 import { getErrorMessage } from "../../../../utils";
-import { GENDER_ARR } from "../../../../constants";
+import { GENDER_ARR, UserRole } from "../../../../constants";
 import { Input, Select, Button, Modal } from "../../../../common";
 import { usersService, artistService } from "../../../../services";
 import styles from "./userEditModal.module.scss";
-import { usePermissions } from "../../../../hooks";
 import type { User } from "../../../../@types/user";
 
 interface UserEditModalProps {
@@ -45,15 +45,19 @@ interface UserEditFormProps {
 }
 
 function UserEditForm({ user, onClose, onSuccess }: UserEditFormProps) {
-  const { isArtist } = usePermissions();
+  const isArtist = user.user.role === UserRole.ARTIST;
 
   const [formData, setFormData] = useState({
     firstName: user.user.first_name || "",
     lastName: user.user.last_name || "",
     phone: user.profile?.phone || "",
-    dob: user.profile?.dob || "",
-    gender: user.profile?.gender || "",
-    address: user.profile?.address || "",
+    dob: (isArtist ? user.artist?.dob : user.profile?.dob)
+      ? moment(isArtist ? user.artist?.dob : user.profile?.dob).format(
+          "YYYY-MM-DD",
+        )
+      : "",
+    gender: (isArtist ? user.artist?.gender : user.profile?.gender) || "",
+    address: (isArtist ? user.artist?.address : user.profile?.address) || "",
     stageName: user.artist?.stage_name || "",
     firstReleaseYear: user.artist?.first_release_year ?? "",
   });

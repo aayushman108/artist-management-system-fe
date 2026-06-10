@@ -50,11 +50,6 @@ export function ForgotPassword() {
     <div className={styles.container}>
       <div className={styles.card}>
         <div className={styles.header}>
-          <img
-            src="/logo.png"
-            alt="Artist Management System"
-            className={styles.logo}
-          />
           <h1>Forgot Password</h1>
           <p>Enter your email to receive a reset link</p>
         </div>

@@ -7,6 +7,7 @@ import {
   useAlbums,
   useMutationPermission,
   Module,
+  usePermissions,
 } from "../../../hooks";
 import { MusicsFilters } from "./musicsFilter";
 import { MusicsTable } from "./musicsTable";
@@ -57,6 +58,8 @@ function MusicsSection() {
 
   const params = useParams();
 
+  const { isArtist } = usePermissions();
+
   useEffect(() => {
     if (params.artistId) {
       albumService.getAlbumAllByArtistId(params.artistId).then((res) => {
@@ -88,7 +91,13 @@ function MusicsSection() {
     if (id) {
       await handleUpdate(id, payload);
     } else {
-      await handleCreate(payload as Music.ICreateMusicPayload);
+      const artistId = !isArtist ? params.artistId : undefined;
+      const finalPayload = {
+        ...payload,
+        artistId,
+      };
+
+      await handleCreate(finalPayload as Music.ICreateMusicPayload);
     }
   };
 
@@ -135,7 +144,7 @@ function MusicsSection() {
     <div className={styles.tabContent}>
       {canMutate && (
         <div className={styles.tabHeader}>
-          <Button size="sm" onClick={handleAdd}>
+          <Button onClick={handleAdd}>
             <span className={styles.btnContent}>
               <HiOutlinePlus size={16} />
               Add Music
@@ -171,6 +180,10 @@ function MusicsSection() {
 function AlbumsSection() {
   const query = useQuery();
 
+  const params = useParams();
+
+  const { isArtist } = usePermissions();
+
   const {
     data: albums,
     loading,
@@ -190,7 +203,12 @@ function AlbumsSection() {
     if (id) {
       await handleUpdate(id, payload);
     } else {
-      await handleCreate(payload as Album.ICreateAlbumPayload);
+      const artistId = !isArtist ? params.artistId : undefined;
+      const finalPayload = {
+        ...payload,
+        artistId,
+      };
+      await handleCreate(finalPayload as Album.ICreateAlbumPayload);
     }
   };
 
@@ -232,7 +250,7 @@ function AlbumsSection() {
     <div className={styles.tabContent}>
       {canMutate && (
         <div className={styles.tabHeader}>
-          <Button size="sm" onClick={handleAdd}>
+          <Button onClick={handleAdd}>
             <span className={styles.btnContent}>
               <HiOutlinePlus size={16} />
               Add Album

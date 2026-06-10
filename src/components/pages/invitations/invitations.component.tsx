@@ -91,7 +91,9 @@ export function InvitationsPage() {
       {/* --- Invitation Requests Section --- */}
       {isSuperAdmin && (
         <div className={styles.invitationRequestsContainer}>
-          <h3>Invitation Requests</h3>
+          <div className={styles.headerRow}>
+            <h3>Invitation Requests</h3>
+          </div>
           <InvitationsFilters />
           <InvitationsTable
             data={remappedInvitations}
@@ -111,12 +113,14 @@ export function InvitationsPage() {
 
       {/* --- Sent Invitations Section --- */}
       <div className={styles.sentInvitationsContainer}>
-        <h3>Sent Invitations</h3>
-        <div className={styles.filterRow}>
-          <SentInvitationsFilters />
+        <div className={styles.headerRow}>
+          <h3>Sent Invitations</h3>
           <Button onClick={() => setIsInviteModalOpen(true)}>
             <HiOutlinePlus size={16} /> Invite
           </Button>
+        </div>
+        <div className={styles.filterRow}>
+          <SentInvitationsFilters />
         </div>
         <SentInvitationsTable
           data={remappedSentInvitations}

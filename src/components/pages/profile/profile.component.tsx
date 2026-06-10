@@ -28,26 +28,28 @@ export function ProfilePage() {
       gender: userProfile?.gender || "",
       address: userProfile?.address || "",
       phone: userProfile?.phone || "",
-      avatar: userProfile?.avatar || "",
     };
     const a = {
-      stage_name: artistProfile?.stage_name || "",
-      manager_id: artistProfile?.manager_id || "",
-      artist_manager_name: artistProfile?.artist_manager_name || "",
-      first_release_year: artistProfile?.first_release_year || "",
+      dob: artistProfile?.dob || "",
+      gender: artistProfile?.gender || "",
+      address: artistProfile?.address || "",
+      stageName: artistProfile?.stage_name || "",
+      managerId: artistProfile?.manager_id || "",
+      managerName: artistProfile?.artist_manager_name || "",
+      firstReleaseYear: artistProfile?.first_release_year || "",
     };
     return {
       phone: p.phone || "",
-      dob: p.dob || "",
-      gender: p.gender || "",
-      address: p.address || "",
-      stageName: a.stage_name || "",
+      dob: isArtist ? a.dob : p.dob || "",
+      gender: isArtist ? a.gender : p.gender || "",
+      address: isArtist ? a.address : p.address || "",
+      stageName: isArtist ? a.stageName : "",
       firstName: user?.first_name || "",
       lastName: user?.last_name || "",
-      managerName: a.artist_manager_name,
-      firstReleaseYear: a.first_release_year ?? "",
+      managerName: isArtist ? a.managerName : "",
+      firstReleaseYear: isArtist ? a.firstReleaseYear : "",
     };
-  }, [user, userProfile, artistProfile]);
+  }, [user, userProfile, artistProfile, isArtist]);
 
   const handleUpdateSuccess = () => {
     refreshMyDetails();
@@ -226,7 +228,7 @@ function ProfileEditForm({
     firstName: profileData.firstName,
     lastName: profileData.lastName,
     phone: profileData.phone,
-    dob: profileData.dob,
+    dob: profileData.dob ? moment(profileData.dob).format("YYYY-MM-DD") : "",
     gender: profileData.gender,
     address: profileData.address,
     stageName: profileData.stageName,
@@ -339,6 +341,7 @@ function ProfileEditForm({
               onChange={handleChange}
               error={errors.stageName}
               placeholder="Enter stage name"
+              required
             />
             <Input
               label="Date of Birth"
@@ -386,6 +389,7 @@ function ProfileEditForm({
               onChange={handleChange}
               error={errors.firstName}
               placeholder="Enter first name"
+              required
             />
             <Input
               label="Last Name"

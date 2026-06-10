@@ -6,3 +6,5 @@ export * from "./albums";
 export * from "./profile";
 export * from "./artistManagerDetails";
 export * from "./artistDetails";
+export * from "./home";
+export * from "./notFound";

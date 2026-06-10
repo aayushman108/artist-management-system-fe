@@ -34,11 +34,6 @@ export function Signup() {
     <div className={styles.signupContainer}>
       <div className={styles.signupCard}>
         <div className={styles.header}>
-          <img
-            src="/logo.png"
-            alt="Artist Management System"
-            className={styles.logo}
-          />
           <h1>{signupAllowed ? "Create an account" : "Request Invitation"}</h1>
           <p className={styles.projectName}>Artist Management System</p>
         </div>
