@@ -57,18 +57,14 @@ function MusicForm({
 }) {
   const isEditing = !!music;
 
-  const toDateInputValue = (date: string | null | undefined) => {
-    if (!date) return "";
-    const m = moment(date);
-    return m.isValid() ? m.format("YYYY-MM-DD") : date;
-  };
-
   const initialValue = {
     title: music?.title || "",
     albumId: music?.album_id || "",
     genre: music?.genre || "",
     language: music?.language || "",
-    releaseDate: toDateInputValue(music?.release_date),
+    releaseDate: music?.release_date
+      ? moment(music?.release_date).format("YYYY-MM-DD")
+      : "",
   };
 
   const [formData, setFormData] = useState(initialValue);
@@ -148,7 +144,7 @@ function MusicForm({
           value={formData.genre}
           onChange={handleChange}
           error={errors.genre}
-          placeholder="Enter genre (optional)"
+          placeholder="Enter genre"
         />
         <Input
           label="Language"
@@ -156,7 +152,7 @@ function MusicForm({
           value={formData.language}
           onChange={handleChange}
           error={errors.language}
-          placeholder="Enter language (optional)"
+          placeholder="Enter language"
         />
         <Input
           label="Release Date"
@@ -165,7 +161,7 @@ function MusicForm({
           value={formData.releaseDate}
           onChange={handleChange}
           error={errors.releaseDate}
-          placeholder="Select release date (optional)"
+          placeholder="Select release date"
         />
       </div>
       <div className={styles.actions}>
