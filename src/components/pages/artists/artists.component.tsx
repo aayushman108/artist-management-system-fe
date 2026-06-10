@@ -75,7 +75,10 @@ export function ArtistsPage() {
     id?: string,
   ) => {
     if (id) {
-      await handleUpdate(id, payload);
+      const { managerId, ...rest } = payload;
+      const data = isSuperAdmin ? { managerId, ...rest } : rest;
+
+      await handleUpdate(id, data);
     }
   };
 

@@ -95,11 +95,17 @@ export function ArtistsTable({
         />
       ),
     },
-    {
-      header: "Manager",
-      key: "managerName",
-      render: (artist) => <span>{artist?.managerName || "N/A"}</span>,
-    },
+    ...(!isArtistManager
+      ? [
+          {
+            header: "Manager",
+            key: "managerName",
+            render: (artist: IArtistRow) => (
+              <span>{artist?.managerName || "N/A"}</span>
+            ),
+          },
+        ]
+      : []),
   ];
 
   const renderActions = useCallback(
