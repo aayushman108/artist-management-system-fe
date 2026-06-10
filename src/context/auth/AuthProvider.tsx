@@ -42,6 +42,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [setAuthData]);
 
   const handleLogin = async (payload: ILoginPayload) => {
+    setIsAuthLoading(true);
     try {
       const res = await authService.login(payload);
       setIsAuthenticated(true);
@@ -53,6 +54,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setArtist(detailsRes.data.artist);
     } catch (error: unknown) {
       setError(getErrorMessage(error));
+    } finally {
+      setIsAuthLoading(false);
     }
   };
 
