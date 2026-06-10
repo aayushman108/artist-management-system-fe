@@ -3,6 +3,17 @@
  */
 
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
+import { getErrorMessage } from "../utils/getErrorMessage";
+import toast from "react-hot-toast";
+
+const MUTATION_METHODS = new Set(["post", "put", "patch", "delete"]);
+
+const DEFAULT_MUTATION_MESSAGES: Record<string, string> = {
+  post: "Created successfully",
+  put: "Updated successfully",
+  patch: "Updated successfully",
+  delete: "Deleted successfully",
+};
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -78,7 +89,17 @@ api.interceptors.request.use(
  * Redirects to /login on refresh failure.
  */
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    const method = response.config?.method?.toLowerCase();
+
+    if (method && MUTATION_METHODS.has(method)) {
+      const message =
+        (response.data as Record<string, unknown>)?.message ??
+        DEFAULT_MUTATION_MESSAGES[method];
+      toast.success(message as string);
+    }
+    return response;
+  },
   async (error: AxiosError) => {
     const originalRequest = error.config as InternalAxiosRequestConfig & {
       _retry?: boolean;
@@ -159,6 +180,13 @@ api.interceptors.response.use(
       } finally {
         isRefreshing = false;
       }
+    }
+
+    if (
+      originalRequest?.url &&
+      MUTATION_METHODS.has(originalRequest.method?.toLowerCase() ?? "")
+    ) {
+      toast.error(getErrorMessage(error));
     }
 
     return Promise.reject(error);
