@@ -6,6 +6,7 @@ import { artistSchema } from "../../../../validationSchema/artist.schema";
 import { validateData } from "../../../../utils/validation";
 import { getErrorMessage } from "../../../../utils";
 import { GENDER_ARR } from "../../../../constants";
+import { usePermissions } from "../../../../hooks";
 
 interface ArtistModalProps {
   isOpen: boolean;
@@ -56,6 +57,8 @@ function ArtistForm({
   onSubmit: ArtistModalProps["onSubmit"];
   onClose: () => void;
 }) {
+  const { isSuperAdmin } = usePermissions();
+
   const isEditing = !!artist;
 
   const initialValue = {
@@ -160,18 +163,20 @@ function ArtistForm({
           error={errors.firstReleaseYear}
           placeholder="Enter first release year"
         />
-        <Select
-          label="Manager"
-          name="managerId"
-          value={formData.managerId}
-          onChange={handleChange}
-          error={errors.managerId}
-          options={[
-            { value: "", label: "None" },
-            ...managers.map((m) => ({ value: m.id, label: m.name })),
-          ]}
-          placeholder="Select manager"
-        />
+        {isSuperAdmin && (
+          <Select
+            label="Manager"
+            name="managerId"
+            value={formData.managerId}
+            onChange={handleChange}
+            error={errors.managerId}
+            options={[
+              { value: "", label: "None" },
+              ...managers.map((m) => ({ value: m.id, label: m.name })),
+            ]}
+            placeholder="Select manager"
+          />
+        )}
       </div>
       <div className={styles.actions}>
         <Button
