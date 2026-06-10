@@ -1,75 +1,51 @@
-# React + TypeScript + Vite
+# Artist Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend for managing artists with features for handling artist profiles, CSV imports, and related administrative workflows. Built with React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Framework:** React 19 with TypeScript
+- **Build Tool:** Vite 8
+- **Routing:** React Router DOM v7
+- **HTTP Client:** Axios
+- **Form Validation:** Zod
+- **CSS:** Sass
+- **Icons:** React Icons
+- **CSV:** Papaparse
 
-## React Compiler
+## Features
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- **Authentication:** Signup/registration with email verification, login, forgot password flow, and logout.
+- **Role-Based Access Control:** Three roles — `super_admin`, `artist_manager`, and `artist` — with granular permissions across the dashboard.
+- **Invitations:** Guest users can request an invitation. Super admins review requests and send invite links via email. Super admins can also directly invite users with any role; artist managers can invite with the `artist` role only.
+- **Users Page:** Super admin only. View, update, and soft-delete users (super admins and artist managers). Hard or soft delete artists.
+- **Artists Page:** Super admins see all artists; artist managers see only their assigned artists. Supports CSV import/export. Artists cannot be created via form — they must be invited.
+- **User Statuses:** `active`, `inactive`, and `migrated` (imported users must use forgot password flow to log in).
+- **Musics & Albums:** CRUD operations for super admins and artists. The Musics tab in the sidebar is visible only to artists.
+- **Profile:** All users can view and update their own profile.
 
-Note: This will impact Vite dev & build performances.
+## Installation
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+npm run dev
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Runs the app at `http://localhost:5173`.
+
+## Build
+
+```bash
+npm run build
+```
+
+## Preview
+
+```bash
+npm run preview
 ```
