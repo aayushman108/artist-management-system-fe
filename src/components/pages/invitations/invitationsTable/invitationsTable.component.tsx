@@ -173,8 +173,8 @@ export function InvitationsTable({
         <ConfirmationModal
           isOpen
           onClose={() => setActiveModal(null)}
-          onConfirm={() => {
-            onSendInvite(activeModal.invitation.id);
+          onConfirm={async () => {
+            await onSendInvite(activeModal.invitation.id);
           }}
           title="Send Invite"
           message={
@@ -193,8 +193,8 @@ export function InvitationsTable({
         <ConfirmationModal
           isOpen
           onClose={() => setActiveModal(null)}
-          onConfirm={() => {
-            onUpdateStatus(
+          onConfirm={async () => {
+            await onUpdateStatus(
               activeModal.invitation.id,
               activeModal.invitation.status === InvitationRequestStatus.PENDING
                 ? InvitationRequestStatus.REJECTED
@@ -238,8 +238,8 @@ export function InvitationsTable({
         <DeleteConfirmationModal
           isOpen
           onClose={() => setActiveModal(null)}
-          onConfirm={() => {
-            onDelete(activeModal.invitation.id);
+          onConfirm={async () => {
+            await onDelete(activeModal.invitation.id);
           }}
           title="Delete Invitation"
           itemName={activeModal.invitation.name}

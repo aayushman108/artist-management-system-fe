@@ -177,12 +177,12 @@ export function ArtistsTable({
             </span>
           }
           hardDeleteDisabled={isArtistManager}
-          onSoftDelete={() => {
-            onDelete(deleteTarget.id, DeleteType.SOFT);
+          onSoftDelete={async () => {
+            await onDelete(deleteTarget.id, DeleteType.SOFT);
             setDeleteTarget(null);
           }}
-          onHardDelete={() => {
-            onDelete(deleteTarget.id, DeleteType.HARD);
+          onHardDelete={async () => {
+            await onDelete(deleteTarget.id, DeleteType.HARD);
             setDeleteTarget(null);
           }}
           softDeleteDescription="Removes the artist profile and all associated albums/music. The artist's user account is deactivated but preserved in the system and can be restored later."

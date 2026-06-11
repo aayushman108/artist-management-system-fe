@@ -101,8 +101,8 @@ export function AlbumsTable({
         <ConfirmationModal
           isOpen
           onClose={() => setDeleteTarget(null)}
-          onConfirm={() => {
-            onDelete(deleteTarget.id);
+          onConfirm={async () => {
+            await onDelete(deleteTarget.id);
             setDeleteTarget(null);
           }}
           title="Delete Album"
