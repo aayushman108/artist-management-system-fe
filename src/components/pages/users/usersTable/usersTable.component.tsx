@@ -193,12 +193,12 @@ export function UsersTable({
             </span>
           }
           hardDeleteDisabled={hardDeleteDisabled}
-          onSoftDelete={() => {
-            onDelete(deleteTarget.id, DeleteType.SOFT);
+          onSoftDelete={async () => {
+            await onDelete(deleteTarget.id, DeleteType.SOFT);
             setDeleteTarget(null);
           }}
-          onHardDelete={() => {
-            onDelete(deleteTarget.id, DeleteType.HARD);
+          onHardDelete={async () => {
+            await onDelete(deleteTarget.id, DeleteType.HARD);
             setDeleteTarget(null);
           }}
           softDeleteDescription={deleteDescriptions.softDeleteDescription}

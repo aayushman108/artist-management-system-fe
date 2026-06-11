@@ -71,6 +71,7 @@ declare namespace Artist {
     gender?: string | null;
     address?: string | null;
     firstReleaseYear?: number | null;
+    managerId?: string | null;
     firstName?: string;
     lastName?: string | null;
   }
