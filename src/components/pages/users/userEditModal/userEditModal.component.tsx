@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from "react";
+import { useState, useEffect, type ChangeEvent } from "react";
 import moment from "moment";
 import { profileSchema } from "../../../../validationSchema/profile.schema";
 import { validateData } from "../../../../utils/validation";
@@ -45,7 +45,19 @@ interface UserEditFormProps {
 }
 
 function UserEditForm({ user, onClose, onSuccess }: UserEditFormProps) {
-  const isArtist = user.user.role === UserRole.ARTIST;
+  const isArtist = user.user?.role === UserRole.ARTIST;
+
+  const [managerOptions, setManagerOptions] = useState<Artist.IManagerOption[]>(
+    [],
+  );
+
+  useEffect(() => {
+    if (isArtist) {
+      artistService.getArtistManagers().then((res) => {
+        setManagerOptions(res?.data || []);
+      });
+    }
+  }, [isArtist]);
 
   const [formData, setFormData] = useState({
     firstName: user.user.first_name || "",
@@ -60,6 +72,7 @@ function UserEditForm({ user, onClose, onSuccess }: UserEditFormProps) {
     address: (isArtist ? user.artist?.address : user.profile?.address) || "",
     stageName: user.artist?.stage_name || "",
     firstReleaseYear: user.artist?.first_release_year ?? "",
+    managerId: user.artist?.manager_id || "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -104,7 +117,9 @@ function UserEditForm({ user, onClose, onSuccess }: UserEditFormProps) {
           gender: validatedData.data.gender,
           address: validatedData.data.address,
           firstReleaseYear: validatedData.data.firstReleaseYear,
+          managerId: formData.managerId || null,
         });
+
         onSuccess();
         onClose();
       } catch (error) {
@@ -223,6 +238,23 @@ function UserEditForm({ user, onClose, onSuccess }: UserEditFormProps) {
             onChange={handleChange}
             error={errors.firstReleaseYear}
             placeholder="Enter first release year"
+          />
+        )}
+
+        {isArtist && (
+          <Select
+            label="Manager"
+            name="managerId"
+            value={formData.managerId}
+            onChange={handleChange}
+            options={[
+              { value: "", label: "None" },
+              ...managerOptions.map((m) => ({
+                value: m.id,
+                label: m.name,
+              })),
+            ]}
+            placeholder="Select manager"
           />
         )}
       </div>
