@@ -125,7 +125,10 @@ export function ArtistsPage() {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setImportModalOpen(true)}
+              onClick={() => {
+                handleImportReset();
+                setImportModalOpen(true);
+              }}
               disabled={importing}
             >
               <span className={styles.btnContent}>

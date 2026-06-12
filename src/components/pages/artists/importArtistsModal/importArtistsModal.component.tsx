@@ -204,6 +204,9 @@ export function ImportArtistsModal({
     setValidationErrors([]);
     setUploadError(null);
     setUploading(false);
+    if (importStatus === ImportStatus.COMPLETED || importStatus === ImportStatus.FAILED) {
+      onReset();
+    }
     onClose();
   };
 
@@ -217,7 +220,7 @@ export function ImportArtistsModal({
 
   const errorRowSet = new Set(validationErrors.map((e) => e.row));
 
-  const isProcessing = importStatus === ImportStatus.PROCESSING || uploading;
+  const isProcessing = importStatus === ImportStatus.PROCESSING;
 
   const renderResult = () => {
     if (importStatus === ImportStatus.COMPLETED) {
