@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import {
   ImportStatus,
   UserRole,
@@ -63,6 +64,7 @@ export function useImportExport(onSuccess: () => void) {
           setImportStatus(ImportStatus.COMPLETED);
           setImportResult(status.result?.imported ?? 0);
           setActiveJobId(null);
+          toast.success(`Successfully imported ${status.result?.imported ?? 0} artist(s)`);
           onSuccess();
           return;
         }
